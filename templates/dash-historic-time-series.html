@@ -1,0 +1,94 @@
+<div class="historic_time_series" >
+    <div class="historic_time_series_header">
+        <div class="historic_time_series_header_left">
+            {{s4gVar.currentPositionPage}} per
+        </div>
+        <div class="historic_time_series_header_right">
+            <table class="tableMenuHistoric">
+                <tr>
+                    <td ng-click="lastDay();currentPeriod='day';" class="{{printClassIf('day')}}" >Day</td>
+                    <!--<td ng-click="lastWeek();currentPeriod='week';" class="{{printClassIf('week')}}">Week</td>-->
+                    <td ng-click="lastMonth();currentPeriod='month';" class="{{printClassIf('month')}}">Month</td>
+                    <td ng-click="lastYear();currentPeriod='year';" class="{{printClassIf('year')}}">Year</td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="historic_time_series_energy">
+        Total Energy {{s4gVar.currentPositionPage=='Consumption'?"Consumed":"Produced"}}: {{s4gLocalVar.round2Digit(s4gLocalVar.allVar['energyBalance']/1000)}} KWh
+        <button type="button" class="button-export-data" data-toggle="modal" data-target="#exportDataModal">
+            Export data
+        </button>
+    </div>
+    <div class="historic_time_series_body">
+
+        <div class="row" style="{{printDisplayNone('day', 'week')}}">
+        <!--        <div ng-if="getSelectedInterval()=='day' || getSelectedInterval()=='week'" class="row"> -->
+            <div class="col-md-6">
+                <label for="fromDate">From: </label>
+                <div class="input-group" name="fromDate" id="fromDate">
+                    <input type="date" class="form-control"
+                           ng-model="startDate"
+                           ng-change="updateRange()" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="toDate">To: </label>
+                <div class="input-group" name="toDate" id="toDate">
+                    <input type="date" class="form-control"
+                           ng-model="endDate" ng-change="updateRange()" />
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="{{printDisplayNone('month', 'month')}}">
+            <!--        <div ng-if="getSelectedInterval()=='month'" class="row">-->
+            <div class="col-md-12">
+                <label for="fromDate2">Month: </label>
+                <div class="input-group" name="fromDate" id="fromDate2">
+                    <input type="month" class="form-control"
+                           ng-model="startDate"
+                           ng-change="updateRange()" />
+                </div>
+            </div>
+        </div>
+
+        <!--<div ng-if="getSelectedInterval()=='year'" class="row">-->
+        <div class="row" style="{{printDisplayNone('year', 'year')}}">
+            <div class="col-md-12">
+                <label for="fromDate3">Year: </label>
+                <div class="input-group" name="fromDate" id="fromDate3">
+                    <input type="number" placeholder="YYYY"
+                           class="form-control"
+                           ng-model="startYear"
+                           ng-change="updateYear();updateRange();">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="button-update-chart" data-ng-disabled="s4gLocalVar.disableUpdateButton()" ng-click="resetCurrentSelection();s4gLocalVar.restartAcquisition()">
+                    Update charts
+                </button>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                Sampling: {{printFrequency()}}
+            </div>
+        </div>
+    </div>
+
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-12" id="graph-container">
+				<nvd3 id="graph" options="dashOptions" data="dashData" ></nvd3>
+			</div>
+		</div>
+	</div>
+
+</div>

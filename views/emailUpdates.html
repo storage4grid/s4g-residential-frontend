@@ -1,0 +1,93 @@
+
+<div class="email_update_box panel panel-default container" ng-controller="emailUpdatesController as ctrl">
+
+    <div class="row justify-content-md-center">
+        <div class="col">
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="error">Error: an error occured while trying to save data! {{ error.message }}</div>
+        </div>
+    </div>
+    <form id="frmEmailUpdates" role="form" ng-submit="signIn()">
+        <h2>Email Updates</h2>
+        <div class="row justify-content-md-center">
+            <div class="form-group emailUpdatesForm">
+                <label class="switchLabel" for="emailUpdatesSwitch">Receive updates</label>
+                <label class="switch">
+                    <input id="emailUpdatesSwitch" ng-model="emailUpdatesEnabled"  type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div ng-if="emailUpdatesEnabled">
+            <div class="row justify-content-md-center">
+                <div class="col form-group form-inline-custom">
+                    <label class="col" for="frequencyInfo">Frequency</label>
+                    <select class="col" ng-model="selectedFrequency" id="frequencyInfo" data-ng-init="selectedFrequency='monthly'">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col form-group form-inline-custom">
+                            <label class="col" for="emailUpdatesTime">Time</label>
+                            <input type="time" class="form-control col" style="width:{{getBlockSizeForInput(1.7);}}px;" id="emailUpdatesTime" name="emailUpdatesTime" ng-model="emailUpdatesTime" />
+                            <!--
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Apri menu <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Daily</a>
+                                    <a class="dropdown-item" href="#">Weekly</a>
+                                    <a class="dropdown-item" href="#">Montly</a>
+                                </div>
+                            </div>
+                            -->
+                </div>
+            </div>
+            <div class="row justify-content-md-center ">
+                <div class="form-group form-inline-custom">
+                    <b>Data</b>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col form-group form-inline-custom text-center">
+                    <label class="col" for="pvInfoUpdatesSwitch">PV</label>
+                    <div class="col">
+                        <label class="switch">
+                            <input id="pvInfoUpdatesSwitch" ng-model="pvInfoEnabled"  type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col form-group form-inline-custom text-center">
+                    <label class="col" for="evInfoUpdatesSwitch">EV</label>
+                    <div class="col">
+                        <label class="switch justify-content-md-center">
+                            <input id="evInfoUpdatesSwitch" ng-model="evInfoEnabled"  type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col form-group form-inline-custom text-center">
+                    <label class="col" for="batteryInfoUpdatesSwitch">Battery</label>
+                    <div class="col">
+                        <label class="switch">
+                            <input id="batteryInfoUpdatesSwitch" ng-model="batteryInfoEnabled"  type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </form>
+</div>

@@ -1,0 +1,84 @@
+
+<div class="footer footerBar" ng-if="$root.data.userLogged">
+    <div class="footer-left">
+        Operation Mode:
+    </div>
+    <div class="footer-center">
+        {{operationalMode}}
+    </div>
+    <div class="footer-right" >
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#operationalMode" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="pics/triangleToTop.png" />
+        </button>
+    </div>
+</div>
+<!--
+<div class="footerTrasparentBar" data-toggle="modal" data-target="#operationalModeModal" ng-if="$root.data.userLogged && $root.currentPositionPage=='home'">
+    <div class="footerButton">
+    </div>
+    <div class="textFooterContainerTransparentBar">
+        <div class="textFooterTransparentBar">
+            {{operationalMode}}
+        </div>
+    </div>
+</div>
+-->
+<!-- Modal -->
+<div class="collapse operationalMode" id="operationalMode" ng-if="$root.data.userLogged">
+    <div class="operationalMode-content">
+        <div class="operationalMode-header">
+            <div class="operationalMode-header-left" >
+                Select an operation mode:
+            </div>
+            <div class="operationalMode-header-right" >
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#operationalMode" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <img src="pics/triangleToLeft.png" />
+                </button>
+            </div>
+        </div>
+        <div class="operationalMode-body">
+            <div class="operationalMode-single">
+                <div class="operationalMode-single-left">
+                    <input id="operationalModeCheckbox4" type="radio" ng-checked="operationModeArray[4]" ng-click="changeOperationalMode('4');" >
+                </div>
+                <div class="operationalMode-single-right">
+                    <div class="operationalMode-single-right-title">None</div>
+                </div>
+            </div>
+            <div class="operationalMode-single">
+                <div class="operationalMode-single-left">
+                    <input id="operationalModeCheckbox1" type="radio" ng-checked="operationModeArray[0]" ng-click="changeOperationalMode('0');" >
+                </div>
+                <div class="operationalMode-single-right">
+                    <div class="operationalMode-single-right-title">Maximize self-consumption</div>
+                    This mode maximizes the usage of self-produced energy
+                </div>
+            </div>
+            <div class="operationalMode-single">
+                <div class="operationalMode-single-left">
+                    <input id="operationalModeCheckbox2" type="radio" ng-checked="operationModeArray[1]" ng-click="changeOperationalMode('1');" >
+                </div>
+                <div class="operationalMode-single-right">
+                    <div class="operationalMode-single-right-title">Minimize Power-exchange with the grid</div>
+                    This mode minimizes the import and export of energy from and to the grid
+                </div>
+            </div>
+            <div class="operationalMode-single">
+                <div class="operationalMode-single-left">
+                    <input id="operationalModeCheckbox3" type="radio" ng-checked="operationModeArray[2]" ng-click="changeOperationalMode('2');" >
+                </div>
+                <div class="operationalMode-single-right">
+                    <div class="operationalMode-single-right-title">Minimize bill costs</div>
+                    Store or use your own produced energy and buy energy from the grid with the focus minimizing your costs
+                </div>
+            </div>
+        </div>
+
+        <!--
+        <div>
+            <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#operationalMode">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        -->
+    </div>
+</div>

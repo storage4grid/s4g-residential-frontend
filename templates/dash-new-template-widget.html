@@ -1,0 +1,87 @@
+<div class="new-template-widget" >
+	<div class="new-template-widget-header">
+		{{headerVar}}
+	</div>
+	<div id="panel-left">
+		<div ng-if="inputData.widgetType == 'system-health'" class="system_health_template_div"
+			 ng-controller="dashSystemHealthController as ctrl" class="col-md-10">
+			<dash-system-health dash-text-color="'black'" value="value"
+										  type="type"></dash-system-health>
+		</div>
+		<img ng-if="inputData.widgetType != 'system-health' && widgetIcon!=''" width="80%" src="{{widgetIcon}}" >
+
+	</div>
+	<div id="panel-right">
+		<div ng-if="inputData.widgetType == 'dash-consumption1'" class="table_consumption" >
+			<table class="tableConsumption">
+				<tr>
+					<th></th>
+					<th>Today<br />(KWh)</th>
+					<th>Current<br />(KW)</th>
+				</tr>
+				<tr class="rowTableConsumption">
+					<td class="leftCellTableConsumption">Self-produced</td>
+					<td>{{s4gLocalVar.todaySelfProduced}}</td>
+					<td>{{s4gVar.currentSelfProduced_final}}</td>
+				</tr>
+				<tr class="rowTableConsumption">
+					<td class="leftCellTableConsumption">Self-consumed</td>
+					<td>{{s4gLocalVar.todaySelfConsumed}}</td>
+					<td>{{s4gVar.currentSelfConsumed_final}}</td>
+				</tr>
+				<tr class="rowTableConsumption">
+					<td class="leftCellTableConsumption">From Grid</td>
+					<td>{{s4gLocalVar.todayEnergyFromGrid}}</td>
+					<td>{{s4gVar.currentFromGrid_final}}</td>
+				</tr>
+				<tr class="rowTableConsumption">
+					<td class="leftCellTableConsumption">To Grid</td>
+					<td>{{s4gLocalVar.todayEnergyToGrid}}</td>
+					<td>{{s4gVar.currentToGrid}}</td>
+				</tr>
+
+			</table>
+		</div>
+
+		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
+			Photovoltaics: <span style="color:{{getColorOfStatus(s4gVar.currentPVSystem1Status);}}">{{s4gVar.currentPVSystem1Status}}</span>
+		</div>
+		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
+			Storage: <span style="color:{{getColorOfStatus(s4gVar.currentStorage1Status);}}">{{s4gVar.currentStorage1Status}}</span>
+		</div>
+		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
+			Electric Vehicle: <span style="color:{{getColorOfStatus(s4gVar.currentEV1Status);}}">{{s4gVar.currentEV1Status}}</span>
+		</div>
+
+		<div ng-if="inputData.widgetType == 'battery-status'" class="table_consumption" >
+			<table class="tableConsumption">
+				<tr>
+					<th></th>
+					<th>SoC</th>
+					<th>Status</th>
+				</tr>
+				<tr class="rowTableConsumption">
+					<td class="leftCellTableConsumption">Storage</td>
+					<td>{{getCurrentBatteryStateOfCharge()}} %</td>
+					<td>{{getCurrentBatteryStatus()}}</td>
+				</tr>
+			</table>
+		</div>
+
+		<div ng-if="inputData.widgetType == 'car-battery-status'" class="table_consumption" >
+
+			<table class="tableConsumption">
+				<tr>
+					<th></th>
+					<th>SoC</th>
+					<th>Status</th>
+				</tr>
+				<tr class="rowTableConsumption">
+					<td class="leftCellTableConsumption">Electric Vehicle</td>
+					<td>{{getCurrentCarSoC()}} %</td>
+					<td>{{getCurrentCarStatus()}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

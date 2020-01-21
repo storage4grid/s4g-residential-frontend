@@ -1,0 +1,15 @@
+<div class="system_info_box row" ng-controller="systemInfoController as ctrl" data-ng-init="init()">
+
+	<div class="home_box_new panel panel-default" ng-controller="dashSystemInfoWidgetController as ctrl"
+		 data-ng-init="init('pv_system_1','pv_info'); headerVar='Photovoltaics'; widgetIcon='pics/solar-panel.png';">
+		<!-- Text monitor for Battery (parameter to call API should be passed within init()) -->
+		<dash-system-info-widget></dash-system-info-widget>
+	</div>
+
+
+	<div class="home_box_new panel panel-default" ng-controller="dashSystemInfoWidgetController as ctrl"
+		 data-ng-init="init('storage_1', 'storage_info'); headerVar='Storage'; widgetIcon='pics/battery-generic.png';">
+		<!-- Text monitor for Battery (parameter to call API should be passed within init()) -->
+		<dash-system-info-widget></dash-system-info-widget>
+	</div>
+</div>

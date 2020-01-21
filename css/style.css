@@ -1,0 +1,1314 @@
+/* make sidebar nav vertical */
+.nav_link_center {
+	margin: 10px 50px;
+	text-align: center;
+}
+
+.panel-default.panel-heading {
+	background-color: transparent;
+	text-align: center;
+	color: black;
+	font-weight: bold;
+	font-size: 150%;
+	height: 50px;
+}
+
+
+.home_box_warning {
+	width: 900px;
+	height: 300px;
+	text-align: center;
+}
+
+
+/* for moving whole battery*/
+.battery_template_div {
+    width: 80%;
+    margin-left:auto;
+    margin-right:auto;
+    /*margin: 200 80;*/
+    /*  border-style: dashed;
+*/
+    height: 100px;
+    /*width: 280px;*/
+}
+
+.battery_size {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	padding: 0px;
+	text-align: center;
+}
+
+
+
+.battery {
+	position: relative;
+	width: 100%;
+	height: 60%;
+	border: 3px solid #000;
+	border-radius: 10px;
+	padding: 0px;
+	text-align: center;
+	/*-webkit-transform: scale(0.5);*/
+	/*transform: translateY(-50%);*/
+}
+
+.battery:before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: -15px;
+	margin-top: -14px;
+	width: 45px;
+	height: 30px;
+	background: #000;
+	clip: rect(0, 48px, 48px, 31.2px);
+}
+
+.battery_text {
+	position: relative;
+	color: black;
+    text-align: center;
+}
+
+.battery_text_measure {
+	margin-top: -20px;
+}
+
+
+.text_value_recom {
+	text-align: center;
+	color: black;
+	font-weight: bold;
+	font-family: sans-serif;
+	font-style: italic;
+	font-size: 120%;
+}
+
+.text_value_condition {
+	text-align: center;
+	color: black;
+	font-weight: bold;
+	font-size: 150%;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+
+body {
+	position: relative;
+	overflow-x: hidden;
+}
+
+
+.smartplug_picture {
+	margin-bottom: 20px;
+}
+
+.toggle_button_label {
+	text-align: center;
+	background-color: #F5F7E1;
+	color: black;
+	font-weight: bold;
+	font-size: 150%;
+}
+
+.login_box {
+	width: 80%;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:2%;
+}
+
+
+.email_update_box {
+	width: 80%;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:2%;
+}
+
+.credits_box
+{
+	width: 80%;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:2%;
+}
+
+.nav-container
+{
+	position: absolute;
+	width:100%;
+	height: auto;
+	z-index:2;
+	background-color:rgba(0, 0, 0, 0.5);
+}
+
+.nav-sub-container
+{
+	padding-top:0px;
+	padding-right:1px;
+	height:100vh;
+	padding-left:1px;
+}
+/* removing border line*/
+.navbar-default {
+	border-color: transparent;
+	background-color:#92d36e;
+	box-shadow: 0px 0px 10px 0px #000000;
+}
+
+.nav-title
+{
+	display: block;
+	padding: 4%;
+	margin:0px;
+	margin-bottom: 2px;
+	font-weight: bold;
+	font-size: 3vh;
+	color: #355723;
+}
+
+.menuNavBar
+{
+	position: relative;
+	float: right;
+	height: 100%;
+	background-color:#92d36e;
+	width: 35%;
+}
+
+.menuNavBar a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.menuNavBar a:link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.menuNavBar a:visited {
+	text-decoration: none;
+	color: inherit;
+}
+
+.menuNavBar a:hover {
+	text-decoration: none;
+	color: inherit;
+}
+
+.menuNavBar a:active {
+	text-decoration: none;
+	color: inherit;
+}
+
+.navbar-center
+{
+	text-align:center;
+}
+
+#panel-right{
+	position:relative;
+	float:left;
+	width: 65%;
+}
+#panel-left{
+	position:relative;
+	float:left;
+	width: 30%;
+}
+
+
+#panel-right-system-info{
+	position:relative;
+	float:left;
+	width: 70%;
+}
+#panel-left-system-info{
+	position:relative;
+	float:left;
+	padding-top:5%;
+	width: 25%;
+}
+
+.navbar-collapse {
+	height: 100vh;
+}
+
+
+@media ( min-width : 768px) {
+
+	.rowTableConsumption
+	{
+		font-size: 1.5vw;
+	}
+
+	.panel-right-title
+	{
+
+		font-weight: bold;
+		font-size: 2vw;
+	}
+
+
+	.home_box_new {
+		text-align: center;
+		margin-left:2.5%;
+		margin-right:2.5%;
+		width:45%;
+	}
+
+
+
+	.historic_time_series
+	{
+		text-align: center;
+		margin-left:2.5%;
+		margin-right:2.5%;
+		width:95%;
+	}
+
+	.home_box {
+		text-align: center;
+		padding-left:3%;
+		padding-right:3%;
+		padding-top:5%;
+		padding-bottom:5%;
+		margin-left:2.5%;
+		margin-right:2.5%;
+	}
+
+
+	.navbar-left
+	{
+		width: 35%;
+		position: relative;
+		float:left;
+		font-weight: bold;
+		font-size: 2.5vw;
+	}
+
+	.navbar-center
+	{
+		width: 30%;
+		position: relative;
+		float:left;
+	}
+
+	.navbar-center img
+	{
+		width: 60%;
+	}
+
+
+	.navbar-right
+	{
+		width: 35%;
+		position: relative;
+		float:right;
+		text-align:right;
+	}
+
+	.text_value {
+		text-align: center;
+		color: black;
+		font-weight: bold;
+		font-size: 2vw;
+		margin-top:5%;
+	}
+
+	.table_consumption {
+		text-align: center;
+		color: black;
+		font-size: 1.5vw;
+		margin-top:10%;
+		margin-bottom:10%;
+	}
+
+	.table_car {
+		text-align: center;
+		color: black;
+		font-size: 2vw;
+		margin-top:2%;
+		margin-bottom:5%;
+	}
+
+
+
+	.footerTrasparentBar {
+		position: fixed;
+		float:left;
+		bottom: 0;
+		left: 0;
+		height: 10%;
+		width: 100%;
+		cursor: pointer;
+		background-color:#ffffff;
+	}
+
+
+
+	.footerButton {
+		position: relative;
+		float:left;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		width: 6%;
+		background-image: url("../pics/gear.png");
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: left bottom;
+	}
+
+	.textFooterContainerTransparentBar
+	{
+		position:relative;
+		float:left;
+		height:100%;
+		width:90%;
+	}
+	.textFooterTransparentBar
+	{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width:100%;
+		font-size:2vw;
+		font-weight: bold;
+		margin-bottom:2%;
+		background-color:#ffffff;
+	}
+
+
+
+	.modal-dialog-centered {
+		width: 100%;
+	}
+
+	.navbar-title
+	{
+		margin-left: 0.5%;
+		margin-top: 0.5%;
+		font-weight: bold;
+		font-size: 2.5vw;
+	}
+
+	.nav-element
+	{
+		display: block;
+		background-color:#dfedd6;
+		padding: 4%;
+		margin:0px;
+		margin-bottom: 2px;
+		font-weight: bold;
+		font-size: 1.5vw;
+	}
+
+	.footerBar {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		background-color:#92d36e;
+		color: black;
+		text-align: left;
+		font-size: 2.0vw;
+		padding-top: 1%;
+		padding-right: 1%;
+		padding-bottom: 1% ;
+		padding-left: 1%;
+	}
+
+	.footer-left
+	{
+		position: relative;
+		float:left;
+		font-weight: bold;
+	}
+	.footer-center
+	{
+		position: relative;
+		float:left;
+		margin-left:5%;
+	}
+	.footer-right
+	{
+		position: relative;
+		float:right;
+	}
+
+	.footer-right img
+	{
+		width: 3vw;
+	}
+
+	.operationalMode-header-left
+	{
+		position: relative;
+		float:left;
+		font-weight: bold;
+	}
+	.operationalMode-header-right
+	{
+		position: relative;
+		float:right;
+	}
+	.operationalMode-header-right img
+	{
+		width: 3vw;
+	}
+
+	.operationalMode-single-right-title
+	{
+		font-size: 1.5vw;
+		font-weight: bold;
+	}
+
+
+	.operationalMode-single-right
+	{
+		position: relative;
+		float:left;
+		width: 95%;
+		height: 100%;
+		font-size: 1.5vw;
+	}
+
+
+	.new-template-widget-header
+	{
+		background-color:#cbe8ba;
+		padding: 2%;
+		color:#355723;
+		font-weight: bold;
+		font-size: 2vw;
+	}
+
+
+	.historic_time_series_header
+	{
+		background-color:#cbe8ba;
+		padding: 2%;
+		color:#355723;
+		font-weight: bold;
+		font-size: 1.5vw;
+	}
+
+	.historic_time_series_header_left
+	{
+		font-size: 2vw;
+	}
+
+	.historic_time_series_energy
+	{
+		background-color:#cbe8ba;
+		color:#355723;
+		font-weight: bold;
+		font-size: 1.5vw;
+		clear: both;
+	}
+	.info_container
+	{
+		padding-bottom:3%;
+		width: 100%;
+		height: 100%;
+		clear:both;
+		font-weight: normal;
+		text-align: left;
+		display: table;
+		font-size: 1.5vw;
+	}
+}
+@media ( max-width : 768px) {
+
+	.rowTableConsumption
+	{
+		font-size: 3vw;
+	}
+	.panel-right-title
+	{
+
+		font-weight: bold;
+		font-size: 3vw;
+	}
+
+	.home_box {
+		text-align: center;
+		padding-left:10%;
+		padding-right:10%;
+		padding-top:5%;
+		padding-bottom:5%;
+		margin-left:8%;
+		margin-right:8%;
+		border-bottom: solid 1px black;
+	}
+
+	.home_box_new {
+		text-align: center;
+		margin-left:2%;
+		margin-right:2%;
+		width:95%;
+	}
+
+
+	.historic_time_series
+	{
+		text-align: center;
+		margin-left:2%;
+		margin-right:2%;
+		width:95%;
+	}
+
+
+	.navbar-left
+	{
+		width: 35%;
+		position: relative;
+		float:left;
+		font-weight: bold;
+		font-size: 4vw;
+	}
+
+	.navbar-center
+	{
+		width: 30%;
+		position: relative;
+		float:left;
+	}
+
+	.navbar-center img
+	{
+		width: 80%;
+	}
+
+
+	.navbar-right
+	{
+		width: 35%;
+		position: relative;
+		float:right;
+		text-align:right;
+	}
+
+	.text_value {
+		text-align: center;
+		color: black;
+		font-weight: bold;
+		font-size: 3.5vw;
+		margin-top:5%;
+	}
+
+	.table_consumption {
+		text-align: center;
+		color: black;
+		font-size: 3vw;
+		margin-top:10%;
+		margin-bottom:10%;
+	}
+
+
+	.table_car {
+		text-align: center;
+		color: black;
+		font-size: 3vw;
+		margin-top:2%;
+		margin-bottom:5%;
+	}
+
+	.footerTrasparentBar {
+		position: fixed;
+		float:left;
+		bottom: 0;
+		left: 0;
+		height: 5%;
+		width: 100%;
+		cursor: pointer;
+		background-color:#ffffff;
+	}
+
+
+	.footerButton {
+		position: relative;
+		float:left;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		width: 7%;
+		background-image: url("../pics/gear.png");
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: left bottom;
+		background-color:#ffffff;
+	}
+
+	.textFooterContainerTransparentBar
+	{
+		position:relative;
+		float:left;
+		height:100%;
+		width:80%;
+	}
+	.textFooterTransparentBar
+	{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width:100%;
+		/*font-size:5vw;*/
+		font-weight: bold;
+		margin-bottom:2%;
+		background-color:#ffffff;
+	}
+
+	.modal-dialog-centered {
+		width: 85%;
+	}
+
+	.navbar-title
+	{
+		margin-left: 0.5%;
+		margin-top: 0.5%;
+		font-weight: bold;
+		font-size: 4vw;
+	}
+
+
+	.nav-element
+	{
+		display: block;
+		background-color:#dfedd6;
+		padding: 4%;
+		margin:0px;
+		margin-bottom: 2px;
+		font-weight: bold;
+		font-size: 2.5vw;
+	}
+
+	.footerBar {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		width: 100%;
+		background-color:#92d36e;
+		color: black;
+		text-align: left;
+		font-size: 3.0vw;
+		padding-top: 2%;
+		padding-right: 2%;
+		padding-bottom: 2% ;
+		padding-left: 2%;
+	}
+
+	.footer-left
+	{
+		position: relative;
+		float:left;
+		font-weight: bold;
+	}
+	.footer-center
+	{
+		position: relative;
+		float:left;
+		margin-left:5%;
+	}
+	.footer-right
+	{
+		position: relative;
+		float:right;
+	}
+
+	.footer-right img
+	{
+		width: 5vw;
+	}
+
+	.operationalMode-header-left
+	{
+		position: relative;
+		float:left;
+		font-weight: bold;
+	}
+	.operationalMode-header-right
+	{
+		position: relative;
+		float:right;
+	}
+	.operationalMode-header-right img
+	{
+		width: 5vw;
+	}
+
+
+	.operationalMode-single-right-title
+	{
+		font-size: 2.5vw;
+		font-weight: bold;
+	}
+
+
+	.operationalMode-single-right
+	{
+		position: relative;
+		float:left;
+		width: 95%;
+		height: 100%;
+		font-size: 2.5vw;
+	}
+
+
+	.new-template-widget-header
+	{
+		background-color:#cbe8ba;
+		padding: 2%;
+		color:#355723;
+		font-weight: bold;
+		font-size: 3vw;
+	}
+
+	.historic_time_series_header
+	{
+		background-color:#cbe8ba;
+		padding: 2%;
+		color:#355723;
+		font-weight: bold;
+		font-size: 3.5vw;
+	}
+	.historic_time_series_energy
+	{
+		background-color:#cbe8ba;
+		color:#355723;
+		font-weight: bold;
+		font-size: 3.5vw;
+		clear: both;
+	}
+
+	.info_container
+	{
+		padding-bottom:3%;
+		width: 100%;
+		height: 100%;
+		clear:both;
+		font-weight: normal;
+		text-align: left;
+		display: table;
+		font-size: 3vw;
+	}
+}
+
+/* for moving whole battery*/
+.car_battery_template_div {
+	width: 80%;
+	margin-left:auto;
+	margin-right:auto;
+	/*margin: 200 80;*/
+	/*  border-style: dashed;
+*/
+	height: 100%;
+	/*width: 280px;*/
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    float:left;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+.switchLabel
+{
+    position: relative;
+    float:left;
+    display: inline-block;
+    height: 34px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right:20px;
+
+}
+
+
+.emailUpdatesForm
+{
+    position:relative;
+    float:left;
+    height: 100%;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+
+
+.form-group label
+{
+	margin-right:20px;
+}
+
+.form-group input
+{
+	width: 100%; box-sizing: border-box;
+}
+
+.form-inline-custom {
+	display: flex;
+	align-items: center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.marginTopAndBottom
+{
+	margin-top: 1%;
+	margin-bottom: 1%;
+
+}
+
+
+
+
+
+
+/* The containerModal */
+.containerModal {
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	font-size: 22px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.containerModal input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.containerModal:hover input ~ .checkmark {
+	background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.containerModal input:checked ~ .checkmark {
+	background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.containerModal .checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.mainContent {
+	margin-bottom:10%;
+}
+
+
+.operationalMode {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	background-color:#92d36e;
+	color: black;
+	text-align: left;
+	padding-top: 2%;
+	padding-right: 2%;
+	padding-bottom: 2% ;
+	padding-left: 2%;
+}
+
+.operationalMode-body
+{
+	position: relative;
+	float:left;
+	clear:both;
+	background-color:#dfedd6;
+	width: 100%;
+	height: 100%;
+	padding-top: 0%;
+	padding-right: 2%;
+	padding-bottom: 2% ;
+	padding-left: 2%;
+}
+
+.operationalMode-header
+{
+	position: relative;
+	float:left;
+	width: 100%;
+	height: 100%;
+	clear:both;
+	padding-bottom: 1% ;
+	font-size: 2.0vw;
+}
+
+.operationalMode-single
+{
+	width:100%;
+	height: 100%;
+	margin-top:1%;
+	clear:both;
+}
+
+.operationalMode-single h5
+{
+	margin:0px;
+}
+
+
+.operationalMode-single-left
+{
+	position: relative;
+	float:left;
+	width: 5%;
+	height: 100%;
+}
+
+.home_box_new
+{
+	background-color:#f1fbeb;
+	margin-top: 15px;
+	box-shadow: 0px 7px 25px -12px #000000;
+}
+
+.historic_time_series_container {
+	text-align: center;
+	margin-left:2%;
+	margin-right:2%;
+	width:95%;
+	background-color:#f1fbeb;
+	margin-top: 15px;
+	box-shadow: 0px 7px 25px -12px #000000;
+	padding-bottom: 3%;
+}
+
+
+.col-md-6
+{
+	padding:0px;
+}
+
+.panel-body img
+{
+	padding:10%;
+}
+
+#panel-left img
+{
+	padding:10%;
+}
+
+.row
+{
+	margin-left:0px;
+	margin-right:0px;
+}
+
+.creditsInMenu
+{
+	position: absolute;
+	font-size: 50%;
+	bottom:0px;
+
+}
+
+.rowTableConsumption
+{
+	background-color:#ffffff;
+	width: 90%;
+	margin-left:auto;
+	margin-right:auto;
+	border-bottom: 1px solid #cccccc;
+	border-spacing: 5px 5px;
+}
+
+.rowTableCar
+{
+	width: 90%;
+	margin-left:auto;
+	margin-right:auto;
+	border-spacing: 5px 5px;
+}
+
+.leftCellTableConsumption
+{
+	font-weight: bold;
+}
+.leftCellTableCar
+{
+	font-weight: bold;
+}
+
+.tableConsumption
+{
+	width: 100%;
+}
+.tableCar
+{
+	width: 100%;
+}
+
+
+
+.info_internal_left
+{
+	width: 48%;
+	padding-left:5%;
+	display: table-cell;
+	vertical-align: middle;
+
+}
+
+.info_internal_right
+{
+	width: 48%;
+	padding-left:5%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+
+
+.storage_health_progess_bar {
+	position: relative;
+	width: 100%;
+	text-align: center;
+	/*-webkit-transform: scale(0.5);*/
+	/*transform: translateY(-50%);*/
+}
+
+.storage_health_size {
+	width: 100%;
+	text-align: center;
+}
+
+
+.storage_health {
+	position: relative;
+	color: black;
+	text-align: center;
+}
+
+#home_container .alert
+{
+	margin-left: auto;
+	margin-right: auto;
+	width:100%;
+	text-align:center;
+}
+
+.email_update_box .alert
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+.production_consumption_box {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+.historic_time_series_container
+{
+	width: 100%;
+}
+
+.historic_time_series
+{
+	background-color:#f1fbeb;
+	margin-top: 15px;
+	box-shadow: 0px 7px 25px -12px #000000;
+}
+
+.historic_time_series_header
+{
+	margin-left:auto;
+	margin-right: auto;
+	display: flex;
+	color: #355723;
+	text-align: center;
+}
+
+.historic_time_series_header_left
+{
+	float: left;
+	width: 40%;
+	text-align: right;
+	padding-right:2%;
+}
+
+
+.historic_time_series_header_right
+{
+	float: left;
+	width: 60%;
+}
+
+.historic_time_series_body
+{
+	clear:both;
+	padding: 2%;
+}
+
+
+.tableMenuHistoric
+{
+	width:100%;
+}
+.tableMenuHistoric td
+{
+	border: 3px solid #355723;
+	width:25%;
+	cursor: pointer;
+	font-weight: normal;
+}
+.tableMenuHistoric button
+{
+    border:none;
+    width:100%;
+    height: 100%;
+}
+
+.tableMenuHistoric .selectedCell
+{
+	background-color: #355723;
+	color: #f1fbeb;
+	width:25%;
+	cursor: pointer;
+	font-weight: normal;
+}
+
+.button-export-data
+{
+	margin:1%;
+	border: 3px solid #355723;
+	background-color: #cbe8ba;
+}
+
+
+.button-update-chart
+{
+	margin:1%;
+	border: 3px solid #cbe8ba;
+	background-color: #cbe8ba;
+    font-weight: bold;
+}
+
+.centered-div
+{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.title-choose-format
+{
+	font-weight: bold;
+}
+
+.disabledButton
+{
+	opacity: 0.5;
+}

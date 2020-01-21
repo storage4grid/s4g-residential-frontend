@@ -1,0 +1,37 @@
+
+
+<div class="pos-f-t">
+    <nav class="navbar navbar-light navbar-default">
+        <div class="nav navbar-left">
+            {{getCurrentView()}}
+        </div>
+        <div class="navbar-center">
+            <a href="#!/home"><img src="pics/storage4grid_logo.png"></a>
+        </div>
+        <div class="navbar-right">
+            <button ng-if="$root.data.userLogged" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    <div class="nav-container">
+
+        <div class="collapse menuNavBar" id="navbarToggleExternalContent" ng-if="$root.data.userLogged">
+            <div class="nav-sub-container">
+                <div class="nav-title">Navigation</div>
+                <a href="#!/home" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element" >Home</h5></a>
+                <a href="#!/dataAnalysis/consumption" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element">Analyse consumption</h5></a>
+                <a href="#!/dataAnalysis/production" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element">Analyse production</h5></a>
+                <a href="#!/systemInfo" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element">System Information</h5></a>
+                <!--
+                <a href="#!/emailUpdates" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element">Email Updates</h5></a>
+                 -->
+                <a href="#!/account" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element">Account</h5></a>
+                <a href="#!/credits" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element">Credits</h5></a>
+                <a href="" ng-click="signOut();" data-toggle="collapse" data-target="#navbarToggleExternalContent" ><h5 class="nav-item nav-element">Log out</h5></a>
+
+            </div>
+        </div>
+
+    </div>
+</div>

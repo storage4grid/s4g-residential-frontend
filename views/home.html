@@ -1,0 +1,35 @@
+<!-- Text monitor for Grid (parameter to call API should be passed within init()) -->
+<div id="home_container" class="row" ng-controller="homeController" data-ng-init="init()">
+	<div class="alert alert-success alert-dismissible" role="alert" ng-if="justSignedup">
+		You were succefully registered! Enjoy your S4G app!
+	</div>
+
+
+	<div ng-click="redirectToSystemInfo();" style="cursor: pointer;" class="home_box_new panel panel-default" ng-controller="dashNewTemplateWidgetController as ctrl"
+		 data-ng-init="init('system_health_widget', 'system-health'); headerVar='System Connectivity'; widgetIcon='';">
+		<!-- Text monitor for Battery (parameter to call API should be passed within init()) -->
+		<dash-new-template-widget></dash-new-template-widget>
+	</div>
+
+
+	<!-- Text monitor for Load (parameter to call API should be passed within init()) -->
+	<div class="home_box_new panel panel-default" ng-controller="dashNewTemplateWidgetController as ctrl"
+		 data-ng-init="init('consumption_widget', 'dash-consumption1'); headerVar='Energy Balance'; widgetIcon='pics/plugFull.png';">
+		<dash-new-template-widget></dash-new-template-widget>
+	</div>
+
+
+	<!-- Battery Widget for Battery SOC - Parameter to call API is inside the js file -->
+	<div class="home_box_new panel panel-default" ng-controller="dashNewTemplateWidgetController as ctrl"
+		 data-ng-init="init('battery_status_widget', 'battery-status'); headerVar='Storage Status'; widgetIcon='pics/battery-generic.png';">
+		<!-- Text monitor for Battery (parameter to call API should be passed within init()) -->
+		<dash-new-template-widget></dash-new-template-widget>
+	</div>
+
+
+	<div class="home_box_new panel panel-default" ng-controller="dashNewTemplateWidgetController as ctrl"
+		 data-ng-init="init('car_battery_status_widget','car-battery-status'); headerVar='Electric Vehicle Status'; widgetIcon='pics/eco-car.png';">
+		<!-- Text monitor for Battery (parameter to call API should be passed within init()) -->
+		<dash-new-template-widget></dash-new-template-widget>
+	</div>
+</div>

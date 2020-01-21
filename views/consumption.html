@@ -1,0 +1,80 @@
+<!-- Text monitor for Grid (parameter to call API should be passed within init()) -->
+<div class="production_consumption_box row"  ng-controller="consumptionController" >
+	<div ng-click="redirectToSystemInfo();" style="cursor: pointer;" class="historic_time_series_container panel panel-default">
+		<!-- Text monitor for Battery (parameter to call API should be passed within init()) -->
+
+		<dash-historic-time-series dash-data="fillLevels" dash-min-y="0"
+								   dash-max-y="100" dash-label="'Mains Meter'"
+								   dash-x-label="'Time [s] UTC'" dash-y-label="'W'"></dash-historic-time-series>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exportDataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exportDataModalTitle">Choose which data do you want to export</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body centered-div">
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_ESS">SMX P_ESS</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_EV">SMX P_EV</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_PCC">SMX P_PCC</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_PV">SMX P_PV</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_froniusBattery">fronius P_Battery</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_froniusGrid">fronius P_Grid</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_froniusLoad">fronius P_Load</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_froniusPhotovoltaic">fronius Photovoltaic</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_powerFromGrid">{{s4gLocalVar.PowerFromGridLabel}}</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_powerFromBattery">{{s4gLocalVar.PowerFromBatteryLabel}}</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_consumptionDirect">{{s4gLocalVar.ConsumptionDirectLabel}}</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_production">{{s4gLocalVar.ProductionLabel}}</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SoC">{{s4gLocalVar.SoCLabel}}</label>
+					</div>
+					<br />
+					<div class="checkbox">
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_all" ng-click="s4gLocalVar.select_all_func();">Select all</label>
+					</div>
+				</div>
+				<div class="modal-body centered-div title-choose-format">
+					Choose the format
+				</div>
+				<div class="modal-body centered-div">
+					<label class="radio-inline"><input type="radio" ng-model="s4gLocalVar.exportFormat" name="optradio" value="JSON">JSON</label>
+					<label class="radio-inline"><input type="radio" ng-model="s4gLocalVar.exportFormat" name="optradio" value="CSV">CSV</label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary btn-sm" ng-click="s4gLocalVar.exportData();">Export</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

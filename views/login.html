@@ -1,0 +1,24 @@
+
+<div class="login_box panel panel-default">
+
+	<div class="alert alert-danger alert-dismissible" role="alert" ng-if="error">Login failed! {{ error.message }}</div>
+	<form id="frmLogin" role="form" ng-submit="signIn()" autocomplete="on">
+		<h2>Login</h2>
+
+		<div class="form-group">
+			<label for="txtEmail">Email address</label>
+			<input type="email" autocomplete="on" class="form-control" id="txtEmail" placeholder="Enter email" name="email" ng-model="user.email" />
+		</div>
+		<div class="form-group">
+			<label for="txtPass">Password</label>
+			<input type="password" autocomplete="on" class="form-control" id="txtPass" placeholder="Password" name="password" ng-model="user.password" />
+		</div>
+		<input type="submit" value="Login" class="btn btn-success center-block"/>
+	</form>
+	<br/>
+	<!--
+	<a href="#!/signup">Sign up</a>
+	<br/>
+	-->
+	<a href="#!/forgotPass">Forgot password?</a>
+</div>

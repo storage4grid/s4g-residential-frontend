@@ -1,0 +1,128 @@
+<div class="new-template-widget">
+	<div class="new-template-widget-header">
+		{{headerVar}}
+	</div>
+	<div id="panel-left-system-info">
+		<img width="80%" src="{{widgetIcon}}" >
+
+	</div>
+	<div id="panel-right-system-info">
+		<div ng-if="inputData.widgetType == 'pv_info'" class="text_value" >
+			<div class="info_container">
+				<div class="info_internal_left">
+					Installed on:
+				</div>
+				<div class="info_internal_right">
+					02.12.2019
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Model:
+				</div>
+				<div class="info_internal_right">
+					Solutronic <br /> Soluplus 50
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Capacity:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					5 kW
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Current production:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					{{getCurrentProduction()}} kW
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Current utilization:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					{{getUtilization()}} %
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Total production <br /> since 02.12.2019:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					{{getTotalProduction()}} KWh
+				</div>
+			</div>
+		</div>
+		<div ng-if="inputData.widgetType == 'storage_info'" class="text_value" >
+			<div class="info_container">
+				<div class="info_internal_left">
+					Installed on:
+				</div>
+				<div class="info_internal_right">
+					02.12.2019
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Model:
+				</div>
+				<div class="info_internal_right">
+					Fronius <br /> Battery 12.0
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Capacity:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					9.6 kWh
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Current status:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					{{getCurrentBatteryStatus()}}
+				</div>
+			</div>
+			<div class="info_container">
+				<div class="info_internal_left">
+					Current SoC:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					{{getCurrentBatteryStateOfCharge()}} %
+				</div>
+			</div>
+
+			<!--
+			<div class="info_container">
+				<div class="info_internal_left">
+					Storage health:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					<div class="storage_health_progess_bar panel-body">
+						<uib-progressbar class="storage_health_size progress-striped active"
+										 value="getStorageHealth()"> <i
+								style="font-size: 2vh; "
+								class="storage_health_text">{{getStorageHealth()}} %</i> </uib-progressbar>
+					</div>
+				</div>
+			</div>
+			-->
+			<div class="info_container">
+				<div class="info_internal_left">
+					Total cycles <br /> since 02.12.2019:
+				</div>
+				<div class="info_internal_right" style="font-weight: bold">
+					{{getCurrentCycles()}}
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>

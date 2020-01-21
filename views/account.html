@@ -1,0 +1,55 @@
+
+<div class="email_update_box panel panel-default" ng-controller="accountController as ctrl">
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="error">Error: <br/> {{ error.message }}</div>
+        </div>
+        <div class="alert alert-success alert-dismissible" role="alertSuccess" ng-if="successfulMessage">
+            {{successfulMessage}}
+        </div>
+    </div>
+        <h2>Account</h2>
+        <br/>
+        In this page you can change your email and your password by filling the following values:
+
+    <form id="frmEmailUpdate" role="form" ng-submit="changeEmail();" autocomplete="off" >
+        <div class="row justify-content-md-center">
+            <div class="form-group form-inline-custom">
+                <label for="txtEmail">Email address</label>
+                <input type="email" class="form-control"  size="{{getBlockSizeForInput(15);}}" id="txtEmail" placeholder="Enter email" name="email" ng-model="user.email" />
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="form-group form-inline-custom">
+                <input type="submit" class="btn btn-success center-block" value="Save new email" />
+            </div>
+        </div>
+    </form>
+    <form id="frmPassUpdate" role="form" ng-submit="changePassword();" autocomplete="off" >
+        <div class="row justify-content-md-center">
+            <div class="form-group form-inline-custom">
+                <label for="txtOldPass">Old Password</label>
+                <input type="password" class="form-control" autocomplete="new-password" size="{{getBlockSizeForInput(15);}}" id="txtOldPass" placeholder="Old Password" name="oldPassword" ng-model="user.oldPassword" />
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="form-group form-inline-custom">
+                <label for="txtNewPass">New Password</label>
+                <input type="password" class="form-control" autocomplete="new-password" size="{{getBlockSizeForInput(15);}}" id="txtNewPass" placeholder="New Password" name="newPassword" ng-model="user.newPassword" />
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="form-group form-inline-custom">
+                <label for="txtNewPass2">Repeat your new password</label>
+                <input type="password" class="form-control" size="{{getBlockSizeForInput(15);}}" id="txtNewPass2" placeholder="Repeat your new Password" name="newPassword2" ng-model="user.newPassword2" />
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="form-group form-inline-custom">
+                <input type="submit" class="btn btn-success center-block" value="Save new password" />
+            </div>
+        </div>
+
+    </form>
+</div>
