@@ -625,41 +625,42 @@ productionModule
                         }
                     }
                     //update the variables for queries only if both start and end date were set
-                        if (($scope.startDate != undefined) && ($scope.endDate != undefined)) {
-                            var start = $scope.startDate;
-                            var dd = start.getDate();
-                            var mm = start.getMonth() + 1;
-                            var yyyy = start.getFullYear();
-                            if (dd < 10) {
-                                dd = '0' + dd;
-                            }
-                            if (mm < 10) {
-                                mm = '0' + mm;
-                            }
-                            $scope.startDateItalianFormat = yyyy + '-' + mm + '-' + dd;
-                            $scope.startMonthItalianFormat = yyyy + '-' + mm;
-                            $scope.startYearItalianFormat = yyyy;
-                            var end = $scope.endDate;
-
-                            //in the request, if we set 23-04-2019, it will send us all the collected data
-                            end = new Date(end.getTime()+(24*60*60*1000));
-                            var dd2 = end.getDate();
-                            var mm2 = end.getMonth() + 1;
-                            var yyyy2 = end.getFullYear();
-                            if (dd2 < 10) {
-                                dd2 = '0' + dd2;
-                            }
-                            if (mm2 < 10) {
-                                mm2 = '0' + mm2;
-                            }
-                            $scope.endDateItalianFormat = yyyy2 + '-' + mm2 + '-' + dd2;
-
-                            $scope.s4gLocalVar.setxTimestampsForCharts($scope.startDate, $scope.endDate);
-                            if ($scope.firstTime) {
-                                $scope.s4gLocalVar.restartAcquisition();
-                                $scope.firstTime = false;
-                            }
+                    if (($scope.startDate != undefined) && ($scope.endDate != undefined)) {
+                        var start = $scope.startDate;
+                        var dd = start.getDate();
+                        var mm = start.getMonth() + 1;
+                        var yyyy = start.getFullYear();
+                        if (dd < 10) {
+                            dd = '0' + dd;
                         }
+                        if (mm < 10) {
+                            mm = '0' + mm;
+                        }
+                        $scope.startDateItalianFormat = yyyy + '-' + mm + '-' + dd;
+                        $scope.startMonthItalianFormat = yyyy + '-' + mm;
+                        $scope.startYearItalianFormat = yyyy;
+                        var end = $scope.endDate;
+
+                        //in the request, if we set 23-04-2019, it will send us all the collected data
+                        //end = new Date(end.getTime()+(24*60*60*1000));
+                        end = new Date(end.getTime());
+                        var dd2 = end.getDate();
+                        var mm2 = end.getMonth() + 1;
+                        var yyyy2 = end.getFullYear();
+                        if (dd2 < 10) {
+                            dd2 = '0' + dd2;
+                        }
+                        if (mm2 < 10) {
+                            mm2 = '0' + mm2;
+                        }
+                        $scope.endDateItalianFormat = yyyy2 + '-' + mm2 + '-' + dd2;
+
+                        $scope.s4gLocalVar.setxTimestampsForCharts($scope.startDate, $scope.endDate);
+                        if ($scope.firstTime) {
+                            $scope.s4gLocalVar.restartAcquisition();
+                            $scope.firstTime = false;
+                        }
+                    }
 
                 }
 
@@ -755,12 +756,12 @@ productionModule
                                                     } else {
                                                         $scope.s4gLocalVar.allVar["NegativeConsumptionHouse"].push(singleValue);
                                                     }
-                                                    if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                        tempDates.push(new Date(singleTimestamp));
-                                                    }
+                                                    //if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                                    tempDates.push(new Date(singleTimestamp));
+                                                    //}
                                                 }
                                             }
-                                            if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && tempDates != [] && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                            if (tempDates != [] && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
                                                 $scope.s4gLocalVar.xTimestamps = tempDates;
                                                 $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
                                             }
@@ -1254,13 +1255,13 @@ productionModule
                     if (yAxis != 2) {
                         //if the selected period is bigger than 1 weeks we change type of graph into bar
                         //if (type == "area") {
-                            if ($scope.s4gLocalVar.diffInSeconds >= $scope.s4gLocalVar.limitDailySelect) {
-                                type = "bar";
-                            }
-                            //else
-                            //{
-                            //    type = "area";
-                            //}
+                        if ($scope.s4gLocalVar.diffInSeconds >= $scope.s4gLocalVar.limitDailySelect) {
+                            type = "bar";
+                        }
+                        //else
+                        //{
+                        //    type = "area";
+                        //}
                         //}
                     }
                     var found = false;

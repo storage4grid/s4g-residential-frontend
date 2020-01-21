@@ -537,7 +537,7 @@ consumptionModule
                     {
                         url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE'
                     }
-                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
+                    //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
                     $scope.s4gLocalVar.getDataFromBackend_array(url, 'PowerFromBattery');
                 }
 
@@ -565,7 +565,7 @@ consumptionModule
                 $scope.s4gLocalVar.disableUpdateButton = function () {
                     //if ($scope.s4gLocalVar.allVar['ready_P_EV'] && $scope.s4gLocalVar.allVar['ready_P_PV'] && $scope.s4gLocalVar.allVar['ready_P_ESS'] && $scope.s4gLocalVar.allVar['ready_P_PCC'] && $scope.s4gLocalVar.allVar['ready_FroniusPhotovoltaic'] && $scope.s4gLocalVar.allVar['ready_FroniusLoad'] && $scope.s4gLocalVar.allVar['ready_FroniusBattery'] && $scope.s4gLocalVar.allVar['ready_FroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeFroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeConsumptionBattery'] && $scope.s4gLocalVar.allVar['ready_ConsumptionForEnergy'] && $scope.s4gLocalVar.allVar['ready_ConsumptionHouse'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegConsHouseJSON'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] && $scope.s4gLocalVar.allVar['ready_Production'] && $scope.s4gLocalVar.allVar['ready_PowerFromBattery'] && $scope.s4gLocalVar.allVar['ready_SoC_JSON']) {
                     if ($scope.s4gLocalVar.allVar['ready_P_EV'] && $scope.s4gLocalVar.allVar['ready_P_PV'] && $scope.s4gLocalVar.allVar['ready_P_ESS'] && $scope.s4gLocalVar.allVar['ready_P_PCC'] && $scope.s4gLocalVar.allVar['ready_FroniusPhotovoltaic'] && $scope.s4gLocalVar.allVar['ready_FroniusLoad'] && $scope.s4gLocalVar.allVar['ready_FroniusBattery'] && $scope.s4gLocalVar.allVar['ready_FroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeFroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeConsumptionBattery'] && $scope.s4gLocalVar.allVar['ready_ConsumptionHouse'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegConsHouseJSON'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] && $scope.s4gLocalVar.allVar['ready_Production'] && $scope.s4gLocalVar.allVar['ready_PowerFromBattery'] && $scope.s4gLocalVar.allVar['ready_SoC_JSON']) {
-                            return false;
+                        return false;
                     } else {
                         return true;
                     }
@@ -644,7 +644,8 @@ consumptionModule
                         var end = $scope.endDate;
 
                         //in the request, if we set 23-04-2019, it will send us all the collected data
-                        end = new Date(end.getTime() + (24 * 60 * 60 * 1000));
+                        //end = new Date(end.getTime() + (24 * 60 * 60 * 1000));
+                        end = new Date(end.getTime());
                         var dd2 = end.getDate();
                         var mm2 = end.getMonth() + 1;
                         var yyyy2 = end.getFullYear();
@@ -744,12 +745,12 @@ consumptionModule
                                                     } else {
                                                         $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'].push(singleValue);
                                                     }
-                                                    if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                        tempDates.push(new Date(singleTimestamp));
-                                                    }
+                                                    //if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                                    tempDates.push(new Date(singleTimestamp));
+                                                    //}
                                                 }
                                             }
-                                            if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                            if (!$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
                                                 $scope.s4gLocalVar.xTimestamps = tempDates;
                                                 $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
                                             }
@@ -1245,13 +1246,13 @@ consumptionModule
                     if (yAxis != 2) {
                         //if the selected period is bigger than 1 week we change type of graph into bar
                         //if (type == "area") {
-                            if ($scope.s4gLocalVar.diffInSeconds >= $scope.s4gLocalVar.limitDailySelect) {
-                                type = "bar";
-                            }
-                            //else
-                            //{
-                            //    type = "area";
-                            //}
+                        if ($scope.s4gLocalVar.diffInSeconds >= $scope.s4gLocalVar.limitDailySelect) {
+                            type = "bar";
+                        }
+                        //else
+                        //{
+                        //    type = "area";
+                        //}
                         //}
                     }
                     var found = false;
