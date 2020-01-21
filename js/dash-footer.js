@@ -108,8 +108,8 @@ dashFooter.controller("dashFooterController", ['$scope', '$rootScope', '$firebas
     {
         //if (isReceivedByPost && (!isNaN(newOperationalMode) || !(newOperationalMode.toLowerCase().includes("fail"))))
         //{
-            $scope.operationalModeVar = newOperationalMode;
-            $scope.s4gLocalVar.sentAlertsFooter = 0;
+        $scope.operationalModeVar = newOperationalMode;
+        $scope.s4gLocalVar.sentAlertsFooter = 0;
         //}
         if (isNaN(newOperationalMode) && newOperationalMode.toLowerCase().includes("fail"))
         {
@@ -126,11 +126,11 @@ dashFooter.controller("dashFooterController", ['$scope', '$rootScope', '$firebas
                 break;
             case '1':
             case 1:
-                $scope.operationalMode = 'Maximize self-production';
+                $scope.operationalMode = 'Minimize Power-exchange with the grid';
                 break;
             case '2':
             case 2:
-                $scope.operationalMode = 'Minimize Prize';
+                $scope.operationalMode = 'Minimize bill costs';
                 break;
             case '3':
             case 3:
@@ -170,8 +170,8 @@ dashFooter.controller("dashFooterController", ['$scope', '$rootScope', '$firebas
 
 // define the switch component
 dashFooter.component('dashFooter', {
-	// the component template
-	templateUrl : 'templates/dash-foot.html',
-	controller: 'dashFooterController'
+    // the component template
+    templateUrl : 'templates/dash-foot.html',
+    controller: 'dashFooterController'
 });
 
