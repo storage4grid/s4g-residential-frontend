@@ -38,6 +38,7 @@ consumptionModule
                 $scope.s4gLocalVar.ConsumptionDirectLabel = "Photovoltaics Power consumed by Loads";
                 $scope.s4gLocalVar.ProductionLabel = "Photovoltaics Power consumed by House"; //pv meno overproduction
                 $scope.s4gLocalVar.PowerFromGridLabel = "Power From Grid";
+                $scope.s4gLocalVar.ConsumptionHouseLabel = "House Consumption";
                 $scope.s4gLocalVar.SoCLabel = "SoC";
                 //limit To Identify Daily Selection (in seconds)
                 $scope.s4gLocalVar.limitDailySelect = 6*24*60*60;
@@ -56,8 +57,9 @@ consumptionModule
                 $scope.s4gLocalVar.allVar['P_PCC'] = [];
                 $scope.s4gLocalVar.allVar['P_PV'] = [];
                 $scope.s4gLocalVar.allVar['FroniusBattery'] = [];
-                $scope.s4gLocalVar.allVar['FroniusGrid'] = [];
-                $scope.s4gLocalVar.allVar['NegativeFroniusGrid'] = [];
+                $scope.s4gLocalVar.allVar['PowerFromGrid'] = [];
+                $scope.s4gLocalVar.allVar['PositivePowerFromGrid'] = [];
+                $scope.s4gLocalVar.allVar['NegativePowerFromGrid'] = [];
                 $scope.s4gLocalVar.allVar['FroniusLoad'] = [];
                 $scope.s4gLocalVar.allVar['NegativeFroniusLoad'] = [];
                 $scope.s4gLocalVar.allVar['FroniusPhotovoltaic'] = [];
@@ -65,7 +67,7 @@ consumptionModule
                 $scope.s4gLocalVar.allVar['PowerFromBattery'] = [];
 
 
-                $scope.s4gLocalVar.allVar['consumptionDirect'] = [];
+                $scope.s4gLocalVar.allVar['ConsumptionDirect'] = [];
                 $scope.s4gLocalVar.allVar['NegConsHouseJSON'] = {};
 
                 $scope.s4gLocalVar.allVar['SoC_JSON'] = {};
@@ -78,8 +80,9 @@ consumptionModule
                 $scope.s4gLocalVar.allVar['ready_P_PCC'] = false;
                 $scope.s4gLocalVar.allVar['ready_P_PV'] = false;
                 $scope.s4gLocalVar.allVar['ready_FroniusBattery'] = false;
-                $scope.s4gLocalVar.allVar['ready_FroniusGrid'] = false;
-                $scope.s4gLocalVar.allVar['ready_NegativeFroniusGrid'] = false;
+                $scope.s4gLocalVar.allVar['ready_PowerFromGrid'] = false;
+                $scope.s4gLocalVar.allVar['ready_PositivePowerFromGrid'] = false;
+                $scope.s4gLocalVar.allVar['ready_NegativePowerFromGrid'] = false;
                 $scope.s4gLocalVar.allVar['ready_FroniusLoad'] = false;
                 //$scope.s4gLocalVar.allVar['ready_NegativeFroniusLoad'] =  false;
                 $scope.s4gLocalVar.allVar['ready_FroniusPhotovoltaic'] = false;
@@ -103,12 +106,12 @@ consumptionModule
                 $scope.s4gLocalVar.select_SMX_P_PCC = true;
                 $scope.s4gLocalVar.select_SMX_P_PV = true;
                 $scope.s4gLocalVar.select_froniusBattery = true;
-                $scope.s4gLocalVar.select_froniusGrid = true;
                 $scope.s4gLocalVar.select_froniusLoad = true;
                 $scope.s4gLocalVar.select_froniusPhotovoltaic = true;
                 $scope.s4gLocalVar.select_production = true;
                 $scope.s4gLocalVar.select_powerFromBattery = true;
                 $scope.s4gLocalVar.select_consumptionDirect = true;
+                $scope.s4gLocalVar.select_consumptionHouse = true;
                 $scope.s4gLocalVar.select_powerFromGrid = true;
                 $scope.s4gLocalVar.select_SoC = true;
                 $scope.s4gLocalVar.select_all = true;
@@ -123,7 +126,6 @@ consumptionModule
                         $scope.s4gLocalVar.select_SMX_P_PCC = true;
                         $scope.s4gLocalVar.select_SMX_P_PV = true;
                         $scope.s4gLocalVar.select_froniusBattery = true;
-                        $scope.s4gLocalVar.select_froniusGrid = true;
                         $scope.s4gLocalVar.select_froniusLoad = true;
                         $scope.s4gLocalVar.select_froniusPhotovoltaic = true;
                         $scope.s4gLocalVar.select_production = true;
@@ -139,7 +141,6 @@ consumptionModule
                         $scope.s4gLocalVar.select_SMX_P_PCC = false;
                         $scope.s4gLocalVar.select_SMX_P_PV = false;
                         $scope.s4gLocalVar.select_froniusBattery = false;
-                        $scope.s4gLocalVar.select_froniusGrid = false;
                         $scope.s4gLocalVar.select_froniusLoad = false;
                         $scope.s4gLocalVar.select_froniusPhotovoltaic = false;
                         $scope.s4gLocalVar.select_production = false;
@@ -256,11 +257,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.EV.pathP + '/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.EV.pathEnergy;
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.EV.pathP + '/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.EV.pathEnergy
                     }
                     $scope.s4gLocalVar.getDataFromBackend_array(url, 'P_EV');
                 }
@@ -277,11 +278,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.PV.pathP + '/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.PV.pathEnergy;
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.PV.pathP + '/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.PV.pathEnergy;
                     }
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.field.PV.pathP + '/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
                     $scope.s4gLocalVar.getDataFromBackend_array(url, 'P_PV');
@@ -297,11 +298,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.ESS.pathP + '/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.ESS.pathEnergy;
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.ESS.pathP + '/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.ESS.pathEnergy;
                     }
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.field.ESS.pathP + '/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
                     $scope.s4gLocalVar.getDataFromBackend_array(url, 'P_ESS');
@@ -317,11 +318,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.PLoad.pathP + '/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.field.PLoad.pathEnergy;
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.PLoad.pathP + '/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.field.PLoad.pathEnergy;
                     }
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.field.PLoad.pathP + '/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
                     $scope.s4gLocalVar.getDataFromBackend_array(url, 'P_PCC');
@@ -338,11 +339,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/photovoltaic/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/photovoltaic/ALL';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/photovoltaic/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/photovoltaic/ALL'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/photovoltaic/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
@@ -358,11 +359,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
@@ -378,11 +379,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/ALL';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/ALL'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
@@ -390,7 +391,7 @@ consumptionModule
                 }
 
 
-                $scope.s4gLocalVar.getFroniusGrid = function () {
+                $scope.s4gLocalVar.getPowerFromGrid = function () {
                     var url = "";
                     if ($scope.s4gLocalVar.frequencyInMinutesForChart<=24*60)
                     {
@@ -399,35 +400,55 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
-                    $scope.s4gLocalVar.getDataFromBackend_array(url, 'FroniusGrid');
+                    $scope.s4gLocalVar.getDataFromBackend_array(url, 'PowerFromGrid');
 
                 }
-                $scope.s4gLocalVar.getNegativeFroniusGrid = function () {
+                $scope.s4gLocalVar.getNegativePowerFromGrid = function () {
                     var url = "";
                     if ($scope.s4gLocalVar.frequencyInMinutesForChart<=24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
+                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
-                    $scope.s4gLocalVar.getDataFromBackend_array(url, 'NegativeFroniusGrid');
+                    $scope.s4gLocalVar.getDataFromBackend_array(url, 'NegativePowerFromGrid');
+                }
+
+                $scope.s4gLocalVar.getPositivePowerFromGrid = function () {
+                    var url = "";
+                    if ($scope.s4gLocalVar.frequencyInMinutesForChart<=24*60)
+                    {
+                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/POSITIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
+                    }
+                    else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
+                    {
+                        //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/POSITIVE';
+                    }
+                    else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
+                    {
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/POSITIVE'
+                    }
+
+                    //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/ALL/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
+                    $scope.s4gLocalVar.getDataFromBackend_array(url, 'PositivePowerFromGrid');
                 }
 
 
@@ -441,11 +462,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/NEGATIVE';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/NEGATIVE';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/NEGATIVE'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/NEGATIVE'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/NEGATIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
@@ -465,11 +486,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/grid/NEGATIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
@@ -510,11 +531,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/ALL'
                     }
 
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/load/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
@@ -531,13 +552,13 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE'
                     }
-                    //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
+                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/battery/POSITIVE/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
                     $scope.s4gLocalVar.getDataFromBackend_array(url, 'PowerFromBattery');
                 }
 
@@ -552,11 +573,11 @@ consumptionModule
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>24*60 && $scope.s4gLocalVar.frequencyInMinutesForChart<=7*24*60)
                     {
                         //http://10.8.0.111:18081/INFLUXDB/MONTH/2019-12/InstallationHouse27/load/ALL
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/SoC/ALL';
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/MONTH/' + $scope.startMonthItalianFormat + '/' + $rootScope.s4gVar.installation + '/SoC/ALL';
                     }
                     else if ($scope.s4gLocalVar.frequencyInMinutesForChart>7*24*60)
                     {
-                        url = $rootScope.s4gVar.backendURL + '/INFLUXDB/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/SoC/ALL'
+                        url = $rootScope.s4gVar.backendURL + '/ENERGY/YEAR/' + $scope.startYearItalianFormat + '/' + $rootScope.s4gVar.installation + '/SoC/ALL'
                     }
                     //var url = $rootScope.s4gVar.backendURL + '/INFLUXDB/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/SoC/GROUPBY/' + $scope.s4gLocalVar.frequencyInMinutesForChart;
                     $scope.s4gLocalVar.getDataFromBackend_array(url, 'SoC_JSON');
@@ -564,7 +585,10 @@ consumptionModule
 
                 $scope.s4gLocalVar.disableUpdateButton = function () {
                     //if ($scope.s4gLocalVar.allVar['ready_P_EV'] && $scope.s4gLocalVar.allVar['ready_P_PV'] && $scope.s4gLocalVar.allVar['ready_P_ESS'] && $scope.s4gLocalVar.allVar['ready_P_PCC'] && $scope.s4gLocalVar.allVar['ready_FroniusPhotovoltaic'] && $scope.s4gLocalVar.allVar['ready_FroniusLoad'] && $scope.s4gLocalVar.allVar['ready_FroniusBattery'] && $scope.s4gLocalVar.allVar['ready_FroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeFroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeConsumptionBattery'] && $scope.s4gLocalVar.allVar['ready_ConsumptionForEnergy'] && $scope.s4gLocalVar.allVar['ready_ConsumptionHouse'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegConsHouseJSON'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] && $scope.s4gLocalVar.allVar['ready_Production'] && $scope.s4gLocalVar.allVar['ready_PowerFromBattery'] && $scope.s4gLocalVar.allVar['ready_SoC_JSON']) {
-                    if ($scope.s4gLocalVar.allVar['ready_P_EV'] && $scope.s4gLocalVar.allVar['ready_P_PV'] && $scope.s4gLocalVar.allVar['ready_P_ESS'] && $scope.s4gLocalVar.allVar['ready_P_PCC'] && $scope.s4gLocalVar.allVar['ready_FroniusPhotovoltaic'] && $scope.s4gLocalVar.allVar['ready_FroniusLoad'] && $scope.s4gLocalVar.allVar['ready_FroniusBattery'] && $scope.s4gLocalVar.allVar['ready_FroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeFroniusGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeConsumptionBattery'] && $scope.s4gLocalVar.allVar['ready_ConsumptionHouse'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegConsHouseJSON'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] && $scope.s4gLocalVar.allVar['ready_Production'] && $scope.s4gLocalVar.allVar['ready_PowerFromBattery'] && $scope.s4gLocalVar.allVar['ready_SoC_JSON']) {
+                    if ($scope.s4gLocalVar.allVar['ready_P_EV'] && $scope.s4gLocalVar.allVar['ready_P_PV'] && $scope.s4gLocalVar.allVar['ready_P_ESS'] && $scope.s4gLocalVar.allVar['ready_P_PCC'] && $scope.s4gLocalVar.allVar['ready_FroniusPhotovoltaic'] && $scope.s4gLocalVar.allVar['ready_FroniusLoad'] && $scope.s4gLocalVar.allVar['ready_FroniusBattery'] && $scope.s4gLocalVar.allVar['ready_PowerFromGrid'] && $scope.s4gLocalVar.allVar['ready_NegativePowerFromGrid'] && $scope.s4gLocalVar.allVar['ready_PositivePowerFromGrid'] && $scope.s4gLocalVar.allVar['ready_NegativeConsumptionBattery'] && $scope.s4gLocalVar.allVar['ready_ConsumptionHouse'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegConsHouseJSON'] && $scope.s4gLocalVar.allVar['ready_ConsumptionDirect'] && $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] && $scope.s4gLocalVar.allVar['ready_Production'] && $scope.s4gLocalVar.allVar['ready_PowerFromBattery'] && $scope.s4gLocalVar.allVar['ready_SoC_JSON'])
+                    {
+                        //update the Y axis only when we have all the data
+                        $scope.$broadcast('endLoading');
                         return false;
                     } else {
                         return true;
@@ -581,8 +605,9 @@ consumptionModule
                         $scope.s4gLocalVar.getP_PCC();
                         $scope.s4gLocalVar.getP_PV();
                         $scope.s4gLocalVar.getFroniusBattery();
-                        $scope.s4gLocalVar.getFroniusGrid();
-                        $scope.s4gLocalVar.getNegativeFroniusGrid();
+                        $scope.s4gLocalVar.getPowerFromGrid();
+                        $scope.s4gLocalVar.getNegativePowerFromGrid();
+                        $scope.s4gLocalVar.getPositivePowerFromGrid();
                         $scope.s4gLocalVar.getFroniusLoad();
                         //$scope.s4gLocalVar.getNegativeFroniusLoad();
                         $scope.s4gLocalVar.getFroniusPhotovoltaic();
@@ -721,7 +746,7 @@ consumptionModule
                     if ($scope.s4gLocalVar.allVar['ready_NegConsHouseJSON']) {
                         //elaborate consumptionHouse (JSON to array)
                         $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'] = [];
-
+                        var values = [];
                         if ($scope.s4gLocalVar.allVar['NegConsHouseJSON'].hasOwnProperty("results")) {
                             var results = $scope.s4gLocalVar.allVar['NegConsHouseJSON'].results;
                             if (typeof results == 'object') {
@@ -731,51 +756,67 @@ consumptionModule
                                     if (typeof series == 'object') {
                                         var singleSerie = series[0];
                                         if (singleSerie.hasOwnProperty("values")) {
-                                            var values = singleSerie.values;
-                                            var tempDates = [];
-                                            for (var key in values) {
-
-                                                if (typeof values[key] == 'object') {
-                                                    var x = values[key];
-                                                    var singleTimestamp = x[0];
-                                                    var singleValue = x[1];
-
-                                                    if (singleValue == null) {
-                                                        $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'].push(0);
-                                                    } else {
-                                                        $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'].push(singleValue);
-                                                    }
-                                                    //if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                    tempDates.push(new Date(singleTimestamp));
-                                                    //}
-                                                }
-                                            }
-                                            if (!$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
-                                                $scope.s4gLocalVar.xTimestamps = tempDates;
-                                                $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
-                                            }
+                                            values = singleSerie.values;
                                         }
                                     }
                                 }
                             }
                         }
+                        else {
+                            values = $scope.s4gLocalVar.allVar['NegConsHouseJSON'];
+                        }
+                        if (typeof values == 'object')
+                        {
+                            var tempDates = [];
+                            for (var key in values) {
+
+                                if (typeof values[key] == 'object' && values != null) {
+                                    var x = values[key];
+                                    var singleTimestamp = x[0];
+                                    //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                    if (typeof singleTimestamp == 'string')
+                                    {
+                                        if (singleTimestamp.charAt(singleTimestamp.length-1) == 'Z')
+                                        {
+                                            singleTimestamp = singleTimestamp.slice(0, -1);
+                                        }
+                                    }
+                                    var singleValue = x[1];
+
+                                    if (singleValue == null) {
+                                        $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'].push(0);
+                                    } else {
+                                        $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'].push(singleValue);
+                                    }
+                                    //if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                        tempDates.push(new Date(singleTimestamp));
+                                    //}
+                                }
+                            }
+                            if (!$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                if (tempDates != []) {
+                                    $scope.s4gLocalVar.xTimestamps = tempDates;
+                                    $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
+                                }
+                            }
+                        }
                         $scope.s4gLocalVar.allVar['ConsumptionHouse'] = [];
                         $scope.s4gLocalVar.allVar['ready_ConsumptionHouse'] = true;
-                        if ($scope.s4gLocalVar.allVar['NegativeConsumptionHouse'] != null && $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'].length > 0 && $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'] != []) {
+                        if ($scope.s4gLocalVar.allVar['NegativeConsumptionHouse'] != null && (typeof $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'] == 'object') && $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'].length > 0 ) {
                             //remove bad values wrongly (wrong sign) stored in the database
                             $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'] = correctArrayWithDates($scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['NegativeConsumptionHouse']);
 
                             var singleType = "line";
-                            var isArea = true;
+                            var isArea = false;
                             if (!$rootScope.s4gVar.demoEnabled) {
                                 $scope.s4gLocalVar.allVar['ConsumptionHouse'] = minusArray($scope.s4gLocalVar.allVar['NegativeConsumptionHouse']);
                             } else {
                                 //when we get data from InstallationHouse27 the data are positive
                                 $scope.s4gLocalVar.allVar['ConsumptionHouse'] = $scope.s4gLocalVar.allVar['NegativeConsumptionHouse'];
                             }
-                            $scope.insertDataInChart($scope.s4gLocalVar.PowerFromGridLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['ConsumptionHouse'], '#ff0000', singleType, 1, isArea);
+                            $scope.insertDataInChart($scope.s4gLocalVar.ConsumptionHouseLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['ConsumptionHouse'], '#000000', singleType, 1, isArea);
                         } else {
-                            $scope.insertDataInChart($scope.s4gLocalVar.PowerFromGridLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#ff0000', singleType, 1, isArea);
+                            $scope.insertDataInChart($scope.s4gLocalVar.ConsumptionHouseLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#000000', singleType, 1, isArea);
                         }
 
 
@@ -784,9 +825,12 @@ consumptionModule
                             //var singleType = "area";
                             var singleType = "line";
                             var isArea = true;
-                            if ($scope.s4gLocalVar.allVar['PowerFromBattery'] != null && $scope.s4gLocalVar.allVar['PowerFromBattery'].length > 0 && $scope.s4gLocalVar.allVar['PowerFromBattery'] != []) {
-                                $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['PowerFromBattery'], '#ffcc00', singleType, 1, isArea);
+                            /*
+                            if ($scope.s4gLocalVar.allVar['PowerFromBattery'] != null && (typeof $scope.s4gLocalVar.allVar['PowerFromBattery'] == 'object') && $scope.s4gLocalVar.allVar['PowerFromBattery'] != [] && $scope.s4gLocalVar.allVar['PowerFromBattery'].length > 0) {
+                                $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['PowerFromBattery'], '#ffff00', singleType, 1, isArea);
                             } else {
+                                */
+                                values = [];
                                 //in the new version (for YEAR and MONTH) we receive different data (JSON instead of array) so we have to process them differently
                                 if ($scope.s4gLocalVar.allVar['PowerFromBattery'].hasOwnProperty("results")) {
                                     var results = $scope.s4gLocalVar.allVar['PowerFromBattery'].results;
@@ -798,44 +842,62 @@ consumptionModule
                                             if (typeof series == 'object') {
                                                 var singleSerie = series[0];
                                                 if (singleSerie.hasOwnProperty("values")) {
-                                                    var values = singleSerie.values;
-                                                    var tempDates = [];
-                                                    for (var key in values) {
-
-                                                        if (typeof values[key] == 'object') {
-                                                            var x = values[key];
-                                                            var singleTimestamp = x[0];
-                                                            var singleValue = x[1];
-
-                                                            if (singleValue == null) {
-                                                                $scope.s4gLocalVar.allVar['PowerFromBattery'].push(0);
-                                                            } else {
-                                                                $scope.s4gLocalVar.allVar['PowerFromBattery'].push(singleValue);
-                                                            }
-                                                            if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                                tempDates.push(new Date(singleTimestamp));
-                                                            }
-                                                        }
-                                                    }
-                                                    if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
-                                                        $scope.s4gLocalVar.xTimestamps = tempDates;
-                                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
-                                                    }
+                                                    values = singleSerie.values;
                                                 }
                                             }
                                         }
                                     }
-                                    if ($scope.s4gLocalVar.allVar['PowerFromBattery'] != null && $scope.s4gLocalVar.allVar['PowerFromBattery'].length > 0 && $scope.s4gLocalVar.allVar['PowerFromBattery'] != []) {
+                                }
+                                else {
+                                    values = $scope.s4gLocalVar.allVar['PowerFromBattery'];
+                                    //remove all values from the variable to reinsert them after the elaboration
+                                    $scope.s4gLocalVar.allVar['PowerFromBattery'] = [];
+                                }
+                                if (typeof values == 'object' && values != null)
+                                {
+                                    var tempDates = [];
+                                    for (var key in values) {
+
+                                        if (typeof values[key] == 'object') {
+                                            var x = values[key];
+                                            var singleTimestamp = x[0];
+                                            //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                            if (typeof singleTimestamp == 'string')
+                                            {
+                                                if (singleTimestamp.charAt(singleTimestamp.length-1) == 'Z')
+                                                {
+                                                    singleTimestamp = singleTimestamp.slice(0, -1);
+                                                }
+                                            }
+                                            var singleValue = x[1];
+
+                                            if (singleValue == null) {
+                                                $scope.s4gLocalVar.allVar['PowerFromBattery'].push(0);
+                                            } else {
+                                                $scope.s4gLocalVar.allVar['PowerFromBattery'].push(singleValue);
+                                            }
+                                            if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                                tempDates.push(new Date(singleTimestamp));
+                                            }
+                                        }
+                                    }
+                                    if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                        if (tempDates != []) {
+                                            $scope.s4gLocalVar.xTimestamps = tempDates;
+                                            $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
+                                        }
+                                    }
+                                    if ($scope.s4gLocalVar.allVar['PowerFromBattery'] != null && typeof $scope.s4gLocalVar.allVar['PowerFromBattery'] == 'object' && $scope.s4gLocalVar.allVar['PowerFromBattery'].length > 0 && $scope.s4gLocalVar.allVar['PowerFromBattery'] != []) {
                                         //remove bad values wrongly (wrong sign) stored in the database
                                         //$scope.s4gLocalVar.allVar['PowerFromBattery'] = correctArrayWithDates($scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['PowerFromBattery']);
-                                        $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['PowerFromBattery'], '#ffcc00', singleType, 1, isArea);
+                                        $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['PowerFromBattery'], '#ffff00', singleType, 1, isArea);
                                     } else {
-                                        $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#ffcc00', singleType, 1, isArea);
+                                        $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#ffff00', singleType, 1, isArea);
                                     }
                                 } else {
-                                    $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#ffcc00', singleType, 1, isArea);
+                                    $scope.insertDataInChart($scope.s4gLocalVar.PowerFromBatteryLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#ffff00', singleType, 1, isArea);
                                 }
-                            }
+                            //}
                         }
 
                         /*
@@ -910,7 +972,9 @@ consumptionModule
                             }
                         }
                         */
+
                         if ($scope.s4gLocalVar.allVar['ready_P_PV']) {
+                            values = [];
                             if ($scope.s4gLocalVar.allVar['P_PV'].hasOwnProperty("results")) {
                                 var results = $scope.s4gLocalVar.allVar['P_PV'].results;
                                 $scope.s4gLocalVar.allVar['P_PV'] = [];
@@ -921,37 +985,230 @@ consumptionModule
                                         if (typeof series == 'object') {
                                             var singleSerie = series[0];
                                             if (singleSerie.hasOwnProperty("values")) {
-                                                var values = singleSerie.values;
-                                                var tempDates = [];
-                                                for (var key in values) {
-
-                                                    if (typeof values[key] == 'object') {
-                                                        var x = values[key];
-                                                        var singleTimestamp = x[0];
-                                                        var singleValue = x[1];
-
-                                                        if (singleValue == null) {
-                                                            $scope.s4gLocalVar.allVar['P_PV'].push(0);
-                                                        } else {
-                                                            $scope.s4gLocalVar.allVar['P_PV'].push(singleValue);
-                                                        }
-                                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                            tempDates.push(new Date(singleTimestamp));
-                                                        }
-                                                    }
-                                                }
-                                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
-                                                    $scope.s4gLocalVar.xTimestamps = tempDates;
-                                                    $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
-                                                }
+                                                values = singleSerie.values;
                                             }
                                         }
+                                    }
+                                }
+                            }
+                            else {
+                                values = $scope.s4gLocalVar.allVar['P_PV'];
+                                //remove all values from the variable to reinsert them after the elaboration
+                                $scope.s4gLocalVar.allVar['P_PV'] = [];
+                            }
+                            if (typeof values == 'object' && values != null)
+                            {
+                                var tempDates = [];
+                                for (var key in values) {
+
+                                    if (typeof values[key] == 'object') {
+                                        var x = values[key];
+                                        var singleTimestamp = x[0];
+                                        //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                        if (typeof singleTimestamp == 'string')
+                                        {
+                                            if (singleTimestamp.charAt(singleTimestamp.length-1) == 'Z')
+                                            {
+                                                singleTimestamp = singleTimestamp.slice(0, -1);
+                                            }
+                                        }
+                                        var singleValue = x[1];
+
+                                        if (singleValue == null) {
+                                            $scope.s4gLocalVar.allVar['P_PV'].push(0);
+                                        } else {
+                                            $scope.s4gLocalVar.allVar['P_PV'].push(singleValue);
+                                        }
+                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                            tempDates.push(new Date(singleTimestamp));
+                                        }
+                                    }
+                                }
+                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                    if (tempDates != []) {
+                                        $scope.s4gLocalVar.xTimestamps = tempDates;
+                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if ($scope.s4gLocalVar.allVar['ready_PowerFromGrid']) {
+                            values = [];
+                            if ($scope.s4gLocalVar.allVar['PowerFromGrid'].hasOwnProperty("results")) {
+                                var results = $scope.s4gLocalVar.allVar['PowerFromGrid'].results;
+                                $scope.s4gLocalVar.allVar['PowerFromGrid'] = [];
+                                if (typeof results == 'object') {
+                                    var element0 = results[0];
+                                    if (element0.hasOwnProperty("series")) {
+                                        var series = element0.series;
+                                        if (typeof series == 'object') {
+                                            var singleSerie = series[0];
+                                            if (singleSerie.hasOwnProperty("values")) {
+                                                values = singleSerie.values;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                values = $scope.s4gLocalVar.allVar['PowerFromGrid'];
+                                //remove all values from the variable to reinsert them after the elaboration
+                                $scope.s4gLocalVar.allVar['PowerFromGrid'] = [];
+                            }
+                            if (typeof values == 'object' && values != null)
+                            {
+                                var tempDates = [];
+                                for (var key in values) {
+
+                                    if (typeof values[key] == 'object') {
+                                        var x = values[key];
+                                        var singleTimestamp = x[0];
+                                        //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                        if (typeof singleTimestamp == 'string')
+                                        {
+                                            if (singleTimestamp.charAt(singleTimestamp.length-1) == 'Z')
+                                            {
+                                                singleTimestamp = singleTimestamp.slice(0, -1);
+                                            }
+                                        }
+                                        var singleValue = x[1];
+
+                                        if (singleValue == null) {
+                                            $scope.s4gLocalVar.allVar['PowerFromGrid'].push(0);
+                                        } else {
+                                            $scope.s4gLocalVar.allVar['PowerFromGrid'].push(singleValue);
+                                        }
+                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                            tempDates.push(new Date(singleTimestamp));
+                                        }
+                                    }
+                                }
+                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                    if (tempDates != []) {
+                                        $scope.s4gLocalVar.xTimestamps = tempDates;
+                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
+                                    }
+                                }
+                            }
+                        }
+                        if ($scope.s4gLocalVar.allVar['ready_PositivePowerFromGrid']) {
+                            values = [];
+                            if ($scope.s4gLocalVar.allVar['PositivePowerFromGrid'].hasOwnProperty("results")) {
+                                var results = $scope.s4gLocalVar.allVar['PositivePowerFromGrid'].results;
+                                $scope.s4gLocalVar.allVar['PositivePowerFromGrid'] = [];
+                                if (typeof results == 'object') {
+                                    var element0 = results[0];
+                                    if (element0.hasOwnProperty("series")) {
+                                        var series = element0.series;
+                                        if (typeof series == 'object') {
+                                            var singleSerie = series[0];
+                                            if (singleSerie.hasOwnProperty("values")) {
+                                                values = singleSerie.values;
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                values = $scope.s4gLocalVar.allVar['PositivePowerFromGrid'];
+                                //remove all values from the variable to reinsert them after the elaboration
+                                $scope.s4gLocalVar.allVar['PositivePowerFromGrid'] = [];
+                            }
+                            if (typeof values == 'object' && values != null) {
+                                var tempDates = [];
+                                for (var key in values) {
+
+                                    if (typeof values[key] == 'object') {
+                                        var x = values[key];
+                                        var singleTimestamp = x[0];
+                                        //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                        if (typeof singleTimestamp == 'string') {
+                                            if (singleTimestamp.charAt(singleTimestamp.length - 1) == 'Z') {
+                                                singleTimestamp = singleTimestamp.slice(0, -1);
+                                            }
+                                        }
+                                        var singleValue = x[1];
+
+                                        if (singleValue == null) {
+                                            $scope.s4gLocalVar.allVar['PositivePowerFromGrid'].push(0);
+                                        } else {
+                                            $scope.s4gLocalVar.allVar['PositivePowerFromGrid'].push(singleValue);
+                                        }
+                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                            tempDates.push(new Date(singleTimestamp));
+                                        }
+                                    }
+                                }
+                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                    if (tempDates != []) {
+                                        $scope.s4gLocalVar.xTimestamps = tempDates;
+                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
+                                    }
+                                }
+                            }
+                        }
+                        if ($scope.s4gLocalVar.allVar['ready_NegativePowerFromGrid']) {
+                            values = [];
+                            if ($scope.s4gLocalVar.allVar['NegativePowerFromGrid'].hasOwnProperty("results")) {
+                                var results = $scope.s4gLocalVar.allVar['NegativePowerFromGrid'].results;
+                                $scope.s4gLocalVar.allVar['NegativePowerFromGrid'] = [];
+                                if (typeof results == 'object') {
+                                    var element0 = results[0];
+                                    if (element0.hasOwnProperty("series")) {
+                                        var series = element0.series;
+                                        if (typeof series == 'object') {
+                                            var singleSerie = series[0];
+                                            if (singleSerie.hasOwnProperty("values")) {
+                                                values = singleSerie.values;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                values = $scope.s4gLocalVar.allVar['NegativePowerFromGrid'];
+                                //remove all values from the variable to reinsert them after the elaboration
+                                $scope.s4gLocalVar.allVar['NegativePowerFromGrid'] = [];
+                            }
+                            if (typeof values == 'object' && values != null)
+                            {
+                                var tempDates = [];
+                                for (var key in values) {
+
+                                    if (typeof values[key] == 'object') {
+                                        var x = values[key];
+                                        var singleTimestamp = x[0];
+                                        //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                        if (typeof singleTimestamp == 'string')
+                                        {
+                                            if (singleTimestamp.charAt(singleTimestamp.length-1) == 'Z')
+                                            {
+                                                singleTimestamp = singleTimestamp.slice(0, -1);
+                                            }
+                                        }
+                                        var singleValue = x[1];
+
+                                        if (singleValue == null) {
+                                            $scope.s4gLocalVar.allVar['NegativePowerFromGrid'].push(0);
+                                        } else {
+                                            $scope.s4gLocalVar.allVar['NegativePowerFromGrid'].push(singleValue);
+                                        }
+                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                            tempDates.push(new Date(singleTimestamp));
+                                        }
+                                    }
+                                }
+                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                    if (tempDates != []) {
+                                        $scope.s4gLocalVar.xTimestamps = tempDates;
+                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
                                     }
                                 }
                             }
                         }
                         if ($scope.s4gLocalVar.allVar['ready_NegativeConsumptionBattery'])
                         {
+                            values = [];
                             if ($scope.s4gLocalVar.allVar['NegativeConsumptionBattery'].hasOwnProperty("results")) {
                                 var results = $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'].results;
                                 $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'] = [];
@@ -962,31 +1219,49 @@ consumptionModule
                                         if (typeof series == 'object') {
                                             var singleSerie = series[0];
                                             if (singleSerie.hasOwnProperty("values")) {
-                                                var values = singleSerie.values;
-                                                var tempDates = [];
-                                                for (var key in values) {
-
-                                                    if (typeof values[key] == 'object') {
-                                                        var x = values[key];
-                                                        var singleTimestamp = x[0];
-                                                        var singleValue = x[1];
-
-                                                        if (singleValue == null) {
-                                                            $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'].push(0);
-                                                        } else {
-                                                            $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'].push(singleValue);
-                                                        }
-                                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                            tempDates.push(new Date(singleTimestamp));
-                                                        }
-                                                    }
-                                                }
-                                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
-                                                    $scope.s4gLocalVar.xTimestamps = tempDates;
-                                                    $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
-                                                }
+                                                values = singleSerie.values;
                                             }
                                         }
+                                    }
+                                }
+                            }
+                            else {
+                                values = $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'];
+                                //remove all values from the variable to reinsert them after the elaboration
+                                $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'] = [];
+                            }
+                            if (typeof values == 'object' && values != null)
+                            {
+                                var tempDates = [];
+                                for (var key in values) {
+
+                                    if (typeof values[key] == 'object') {
+                                        var x = values[key];
+                                        var singleTimestamp = x[0];
+                                        //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                        if (typeof singleTimestamp == 'string')
+                                        {
+                                            if (singleTimestamp.charAt(singleTimestamp.length-1) == 'Z')
+                                            {
+                                                singleTimestamp = singleTimestamp.slice(0, -1);
+                                            }
+                                        }
+                                        var singleValue = x[1];
+
+                                        if (singleValue == null) {
+                                            $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'].push(0);
+                                        } else {
+                                            $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'].push(singleValue);
+                                        }
+                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                            tempDates.push(new Date(singleTimestamp));
+                                        }
+                                    }
+                                }
+                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                    if (tempDates != []) {
+                                        $scope.s4gLocalVar.xTimestamps = tempDates;
+                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
                                     }
                                 }
                             }
@@ -996,6 +1271,7 @@ consumptionModule
                         }
                         if ($scope.s4gLocalVar.allVar['ready_NegativeOverProduction'])
                         {
+                            values = [];
                             if ($scope.s4gLocalVar.allVar['NegativeOverProduction'].hasOwnProperty("results")) {
                                 var results = $scope.s4gLocalVar.allVar['NegativeOverProduction'].results;
                                 $scope.s4gLocalVar.allVar['NegativeOverProduction'] = [];
@@ -1006,31 +1282,49 @@ consumptionModule
                                         if (typeof series == 'object') {
                                             var singleSerie = series[0];
                                             if (singleSerie.hasOwnProperty("values")) {
-                                                var values = singleSerie.values;
-                                                var tempDates = [];
-                                                for (var key in values) {
-
-                                                    if (typeof values[key] == 'object') {
-                                                        var x = values[key];
-                                                        var singleTimestamp = x[0];
-                                                        var singleValue = x[1];
-
-                                                        if (singleValue == null) {
-                                                            $scope.s4gLocalVar.allVar['NegativeOverProduction'].push(0);
-                                                        } else {
-                                                            $scope.s4gLocalVar.allVar['NegativeOverProduction'].push(singleValue);
-                                                        }
-                                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                            tempDates.push(new Date(singleTimestamp));
-                                                        }
-                                                    }
-                                                }
-                                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
-                                                    $scope.s4gLocalVar.xTimestamps = tempDates;
-                                                    $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
-                                                }
+                                                values = singleSerie.values;
                                             }
                                         }
+                                    }
+                                }
+                            }
+                            else {
+                                values = $scope.s4gLocalVar.allVar['NegativeOverProduction'];
+                                //remove all values from the variable to reinsert them after the elaboration
+                                $scope.s4gLocalVar.allVar['NegativeOverProduction'] = [];
+                            }
+                            if (typeof values == 'object' && values != null)
+                            {
+                                var tempDates = [];
+                                for (var key in values) {
+
+                                    if (typeof values[key] == 'object') {
+                                        var x = values[key];
+                                        var singleTimestamp = x[0];
+                                        //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                        if (typeof singleTimestamp == 'string')
+                                        {
+                                            if (singleTimestamp.charAt(singleTimestamp.length-1) == 'Z')
+                                            {
+                                                singleTimestamp = singleTimestamp.slice(0, -1);
+                                            }
+                                        }
+                                        var singleValue = x[1];
+
+                                        if (singleValue == null) {
+                                            $scope.s4gLocalVar.allVar['NegativeOverProduction'].push(0);
+                                        } else {
+                                            $scope.s4gLocalVar.allVar['NegativeOverProduction'].push(singleValue);
+                                        }
+                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                            tempDates.push(new Date(singleTimestamp));
+                                        }
+                                    }
+                                }
+                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                    if (tempDates != []) {
+                                        $scope.s4gLocalVar.xTimestamps = tempDates;
+                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
                                     }
                                 }
                             }
@@ -1052,6 +1346,19 @@ consumptionModule
                         }
 
 
+                        //calculate the ConsumptionDirect
+                        if ($scope.s4gLocalVar.allVar['ready_PowerFromGrid']) {
+                            //var singleType = "area";
+                            var singleType = "line";
+                            var isArea = true;
+                            if ($scope.s4gLocalVar.allVar['PowerFromGrid'] != null && $scope.s4gLocalVar.allVar['PowerFromGrid'].length > 0 && $scope.s4gLocalVar.allVar['PowerFromGrid'] != []) {
+                                $scope.insertDataInChart($scope.s4gLocalVar.PowerFromGridLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.allVar['PositivePowerFromGrid'], '#ff0000', singleType, 1, isArea);
+                            } else {
+                                $scope.insertDataInChart($scope.s4gLocalVar.PowerFromGridLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#ff0000', singleType, 1, isArea);
+                            }
+                        }
+
+
                         //calculate the production
                         if ($scope.s4gLocalVar.allVar['ready_P_PV'] && $scope.s4gLocalVar.allVar['ready_NegativeOverProduction']) {
                             //production = P_PV - overProduction
@@ -1060,51 +1367,68 @@ consumptionModule
                             //$scope.s4gLocalVar.production = sumArrays($scope.s4gLocalVar.allVar['P_PV'], $scope.s4gLocalVar.allVar['NegativeOverProduction']);
                             $scope.s4gLocalVar.production = $scope.s4gLocalVar.calculateProduction($scope.s4gLocalVar.allVar['P_PV'], $scope.s4gLocalVar.allVar['NegativeOverProduction']);
                             $scope.s4gLocalVar.allVar['ready_Production'] = true;
+                            /*
                             if ($scope.s4gLocalVar.production != null && $scope.s4gLocalVar.production.length > 0 && $scope.s4gLocalVar.production != []) {
                                 $scope.insertDataInChart($scope.s4gLocalVar.ProductionLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.production, '#000000', singleType, 1, isArea);
                             } else {
                                 $scope.insertDataInChart($scope.s4gLocalVar.ProductionLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#000000', singleType, 1, isArea);
                             }
+                             */
                         }
 
                         //calculate the State of Charge (è in percentuale, quindi da capire come mostrarlo nello stesso grafico)
                         //http://130.192.86.142:18081/INFLUXDB/2019-03-05/2019-03-07/InstallationHouseBolzano/SoC/GROUPBY/30
 
-
-                        if ($scope.s4gLocalVar.allVar['SoC_JSON'].hasOwnProperty("results")) {
+                        if ($scope.s4gLocalVar.allVar['ready_SoC_JSON'])
+                        {
+                            values = [];
                             $scope.s4gLocalVar.SoC = [];
-                            var results = $scope.s4gLocalVar.allVar['SoC_JSON'].results;
-                            if (typeof results == 'object') {
-                                var element0 = results[0];
-                                if (element0.hasOwnProperty("series")) {
-                                    var series = element0.series;
-                                    if (typeof series == 'object') {
-                                        var singleSerie = series[0];
-                                        if (singleSerie.hasOwnProperty("values")) {
-                                            var values = singleSerie.values;
-                                            var tempDates = [];
-                                            for (var key in values) {
-
-                                                if (typeof values[key] == 'object') {
-                                                    var x = values[key];
-                                                    var singleTimestamp = x[0];
-                                                    var singleValue = x[1];
-
-                                                    if (singleValue == null) {
-                                                        $scope.s4gLocalVar.SoC.push(0);
-                                                    } else {
-                                                        $scope.s4gLocalVar.SoC.push(singleValue);
-                                                    }
-                                                    if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
-                                                        tempDates.push(new Date(singleTimestamp));
-                                                    }
-                                                }
-                                            }
-                                            if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
-                                                $scope.s4gLocalVar.xTimestamps = tempDates;
-                                                $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
+                            if ($scope.s4gLocalVar.allVar['SoC_JSON'].hasOwnProperty("results")) {
+                                var results = $scope.s4gLocalVar.allVar['SoC_JSON'].results;
+                                if (typeof results == 'object') {
+                                    var element0 = results[0];
+                                    if (element0.hasOwnProperty("series")) {
+                                        var series = element0.series;
+                                        if (typeof series == 'object') {
+                                            var singleSerie = series[0];
+                                            if (singleSerie.hasOwnProperty("values")) {
+                                                values = singleSerie.values;
                                             }
                                         }
+                                    }
+                                }
+                            } else {
+                                values = $scope.s4gLocalVar.allVar['SoC_JSON'];
+                            }
+                            if (typeof values == 'object' && values != null) {
+                                var tempDates = [];
+                                for (var key in values) {
+
+                                    if (typeof values[key] == 'object') {
+                                        var x = values[key];
+                                        var singleTimestamp = x[0];
+                                        //remove the Z to let the system interprete the timestamp as GMT instead of UTC
+                                        if (typeof singleTimestamp == 'string') {
+                                            if (singleTimestamp.charAt(singleTimestamp.length - 1) == 'Z') {
+                                                singleTimestamp = singleTimestamp.slice(0, -1);
+                                            }
+                                        }
+                                        var singleValue = x[1];
+
+                                        if (singleValue == null) {
+                                            $scope.s4gLocalVar.SoC.push(0);
+                                        } else {
+                                            $scope.s4gLocalVar.SoC.push(singleValue);
+                                        }
+                                        if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60) {
+                                            tempDates.push(new Date(singleTimestamp));
+                                        }
+                                    }
+                                }
+                                if ($scope.s4gLocalVar.frequencyInMinutesForChart > 24 * 60 && !$scope.s4gLocalVar.alreadyGetTimestampFromResponse) {
+                                    if (tempDates != []) {
+                                        $scope.s4gLocalVar.xTimestamps = tempDates;
+                                        $scope.s4gLocalVar.alreadyGetTimestampFromResponse = true;
                                     }
                                 }
                             }
@@ -1117,9 +1441,9 @@ consumptionModule
 
                             $scope.s4gLocalVar.allVar['ready_SoC_JSON'] = true;
                             if ($scope.s4gLocalVar.SoC != null && $scope.s4gLocalVar.SoC.length > 0 && $scope.s4gLocalVar.SoC != []) {
-                                $scope.insertDataInChart($scope.s4gLocalVar.SoCLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.SoC, '#ff9900', singleType, 2, isArea);
+                                $scope.insertDataInChart($scope.s4gLocalVar.SoCLabel, $scope.s4gLocalVar.xTimestamps, $scope.s4gLocalVar.SoC, '#006600', singleType, 2, isArea);
                             } else {
-                                $scope.insertDataInChart($scope.s4gLocalVar.SoCLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#ff9900', singleType, 2, isArea);
+                                $scope.insertDataInChart($scope.s4gLocalVar.SoCLabel, $scope.s4gLocalVar.xTimestamps, new Array($scope.s4gLocalVar.xTimestamps.length).fill(0), '#006600', singleType, 2, isArea);
                             }
                         } else {
                             $scope.s4gLocalVar.deleteSeriesFromChart($scope.s4gLocalVar.SoCLabel);
@@ -1132,7 +1456,7 @@ consumptionModule
                 $scope.dashData = [
                     {
                         values: [],
-                        key: $scope.s4gLocalVar.PowerFromGridLabel,
+                        key: $scope.s4gLocalVar.ConsumptionHouseLabel,
                         color: '#ff0000'
                     }
                 ];
@@ -1156,18 +1480,20 @@ consumptionModule
                     // at first we check if we have already any series in the chart
                     // if so, we simply remove the data inside each series
                     // otherwise, if the chart is completely empty, we set a sample series
-                    for (index = 0; index < $scope.dashData.length; index++) {
-                        if ($scope.dashData[index] != undefined) {
-                            inserted = true;
-                            $scope.dashData[index].values = [];
-                            /*
-                            $scope.dashData[index].values.push({'x':[],'y':[]});
-                            */
-                            //we set only the first date to let user see that no data is available, but avoiding to start from 1986
-                            var tempReset1 = {};
-                            tempReset1.x = $scope.s4gLocalVar.xTimestamps[0];
-                            tempReset1.y = 0;
-                            $scope.dashData[index].values.push(tempReset1);
+                    if ($scope.dashData.hasOwnProperty("length")) {
+                        for (index = 0; index < $scope.dashData.length; index++) {
+                            if ($scope.dashData[index] != undefined) {
+                                inserted = true;
+                                $scope.dashData[index].values = [];
+                                /*
+                                $scope.dashData[index].values.push({'x':[],'y':[]});
+                                */
+                                //we set only the first date to let user see that no data is available, but avoiding to start from 1986
+                                var tempReset1 = {};
+                                tempReset1.x = $scope.s4gLocalVar.xTimestamps[0];
+                                tempReset1.y = 0;
+                                $scope.dashData[index].values.push(tempReset1);
+                            }
                         }
                     }
                     if (!inserted) {
@@ -1246,13 +1572,13 @@ consumptionModule
                     if (yAxis != 2) {
                         //if the selected period is bigger than 1 week we change type of graph into bar
                         //if (type == "area") {
-                        if ($scope.s4gLocalVar.diffInSeconds >= $scope.s4gLocalVar.limitDailySelect) {
-                            type = "bar";
-                        }
-                        //else
-                        //{
-                        //    type = "area";
-                        //}
+                            if ($scope.s4gLocalVar.diffInSeconds >= $scope.s4gLocalVar.limitDailySelect) {
+                                type = "bar";
+                            }
+                            //else
+                            //{
+                            //    type = "area";
+                            //}
                         //}
                     }
                     var found = false;
@@ -1337,7 +1663,14 @@ consumptionModule
                                 */
                                 //we set only the first date to let user see that no data is available, but avoiding to start from 1986
                                 var tempinsertDataInChart3 = {};
-                                tempinsertDataInChart3.x = xTimestamps[0];
+                                if (xTimestamps.length > 0) {
+                                    tempinsertDataInChart3.x = xTimestamps[0];
+                                }
+                                else
+                                {
+                                    var date = new Date($scope.startDate.getTime());
+                                    tempinsertDataInChart3.x = date;
+                                }
                                 tempinsertDataInChart3.y = 0;
                                 $scope.dashData[index].values.push(tempinsertDataInChart3);
 
@@ -1359,7 +1692,14 @@ consumptionModule
                             */
                             //we set only the first date to let user see that no data is available, but avoiding to start from 1986
                             var tempinsertDataInChart4 = {};
-                            tempinsertDataInChart4.x = xTimestamps[0];
+                            if (xTimestamps.length > 0) {
+                                tempinsertDataInChart4.x = xTimestamps[0];
+                            }
+                            else
+                            {
+                                var date = new Date($scope.startDate.getTime());
+                                tempinsertDataInChart4.x = date;
+                            }
                             tempinsertDataInChart4.y = 0;
                             $scope.dashData[index].values.push(tempinsertDataInChart4);
                             $scope.dashData[index].color = color;
@@ -1372,7 +1712,6 @@ consumptionModule
                             }
                         }
                     }
-                    $scope.$broadcast('endLoading');
                     // $scope.dashData = [{}]
                     //
                     // var temp3 = {};
@@ -1401,7 +1740,7 @@ consumptionModule
                         $scope.dashData = [
                             {
                                 values: [],
-                                key: $scope.s4gLocalVar.PowerFromGridLabel,
+                                key: $scope.s4gLocalVar.ConsumptionHouseLabel,
                                 color: '#ff0000'
                             }
                         ];
@@ -1459,15 +1798,6 @@ consumptionModule
                         }
                         atLeastOne = true;
                     }
-                    if ($scope.s4gLocalVar.select_froniusGrid)
-                    {
-                        if (!$scope.s4gLocalVar.allVar['ready_FroniusGrid'])
-                        {
-                            proceed = false;
-                            listOfNotYetAvailable.push("FroniusGrid");
-                        }
-                        atLeastOne = true;
-                    }
                     if ($scope.s4gLocalVar.select_froniusLoad)
                     {
                         if (!$scope.s4gLocalVar.allVar['ready_FroniusLoad'])
@@ -1505,8 +1835,7 @@ consumptionModule
                     }
                     if ($scope.s4gLocalVar.select_powerFromGrid)
                     {
-                        //the value PowerFromGrid is actually equal to the consumptionHouse
-                        if (!$scope.s4gLocalVar.allVar['ready_ConsumptionHouse'])
+                        if (!$scope.s4gLocalVar.allVar['ready_PowerFromGrid'])
                         {
                             proceed = false;
                             listOfNotYetAvailable.push("PowerFromGrid");
@@ -1516,7 +1845,6 @@ consumptionModule
 
                     if ($scope.s4gLocalVar.select_SoC)
                     {
-                        //the value PowerFromGrid is actually equal to the consumptionHouse
                         if (!$scope.s4gLocalVar.allVar['ready_SoC_JSON'])
                         {
                             proceed = false;
@@ -1527,7 +1855,6 @@ consumptionModule
 
                     if ($scope.s4gLocalVar.select_production)
                     {
-                        //the value PowerFromGrid is actually equal to the consumptionHouse
                         if (!$scope.s4gLocalVar.allVar['ready_Production'])
                         {
                             proceed = false;
@@ -1537,7 +1864,7 @@ consumptionModule
                     }
                     if ($scope.s4gLocalVar.select_powerFromBattery)
                     {
-                        //the value PowerFromGrid is actually equal to the consumptionHouse
+                        //the value PowerFromBattery is actually equal to the consumptionHouse
                         if (!$scope.s4gLocalVar.allVar['ready_PowerFromBattery'])
                         {
                             proceed = false;
@@ -1624,18 +1951,18 @@ consumptionModule
                                 }
                                 headerCSV.push("froniusBattery");
                             }
-                            if ($scope.s4gLocalVar.select_froniusGrid)
+                            if ($scope.s4gLocalVar.select_powerFromGrid)
                             {
-                                if ($scope.s4gLocalVar.allVar['FroniusGrid'].length > 0 && $scope.s4gLocalVar.allVar['FroniusGrid'][i] != null && !isNaN($scope.s4gLocalVar.allVar['FroniusGrid'][i]) && $scope.s4gLocalVar.allVar['FroniusGrid'][i] != '' && $scope.s4gLocalVar.allVar['FroniusGrid'][i] != [])
+                                if ($scope.s4gLocalVar.allVar['PowerFromGrid'].length > 0 && $scope.s4gLocalVar.allVar['PowerFromGrid'][i] != null && !isNaN($scope.s4gLocalVar.allVar['PowerFromGrid'][i]) && $scope.s4gLocalVar.allVar['PowerFromGrid'][i] != '' && $scope.s4gLocalVar.allVar['PowerFromGrid'][i] != [])
                                 {
-                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()].froniusGrid = $scope.s4gLocalVar.allVar['FroniusGrid'][i];
-                                    resultForCSV.froniusGrid = $scope.s4gLocalVar.allVar['FroniusGrid'][i];
+                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromGridLabel] = $scope.s4gLocalVar.allVar['PowerFromGrid'][i];
+                                    resultForCSV[$scope.s4gLocalVar.PowerFromGridLabel] = $scope.s4gLocalVar.allVar['PowerFromGrid'][i];
                                 } else
                                 {
-                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()].froniusGrid = 0;
-                                    resultForCSV.froniusGrid = 0;
+                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromGridLabel] = 0;
+                                    resultForCSV[$scope.s4gLocalVar.PowerFromGridLabel] = 0;
                                 }
-                                headerCSV.push("froniusGrid");
+                                headerCSV.push($scope.s4gLocalVar.PowerFromGridLabel);
                             }
                             if ($scope.s4gLocalVar.select_froniusLoad)
                             {
@@ -1706,28 +2033,29 @@ consumptionModule
                             {
                                 if ($scope.s4gLocalVar.allVar['PowerFromBattery'].length > 0 && $scope.s4gLocalVar.allVar['PowerFromBattery'][i] != null && !isNaN($scope.s4gLocalVar.allVar['PowerFromBattery'][i]) && $scope.s4gLocalVar.allVar['PowerFromBattery'][i] != '' && $scope.s4gLocalVar.allVar['PowerFromBattery'][i] != [])
                                 {
-                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromGridLabel] = $scope.s4gLocalVar.allVar['PowerFromBattery'][i];
-                                    resultForCSV[$scope.s4gLocalVar.PowerFromGridLabel] = $scope.s4gLocalVar.allVar['PowerFromBattery'][i];
+                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromBatteryLabel] = $scope.s4gLocalVar.allVar['PowerFromBattery'][i];
+                                    resultForCSV[$scope.s4gLocalVar.PowerFromBatteryLabel] = $scope.s4gLocalVar.allVar['PowerFromBattery'][i];
                                 } else
                                 {
-                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromGridLabel] = 0;
-                                    resultForCSV[$scope.s4gLocalVar.PowerFromGridLabel] = 0;
+                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromBatteryLabel] = 0;
+                                    resultForCSV[$scope.s4gLocalVar.PowerFromBatteryLabel] = 0;
                                 }
-                                headerCSV.push([$scope.s4gLocalVar.PowerFromGridLabel]);
+                                headerCSV.push([$scope.s4gLocalVar.PowerFromBatteryLabel]);
                             }
-                            if ($scope.s4gLocalVar.select_powerFromGrid)
+                            if ($scope.s4gLocalVar.select_consumptionHouse)
                             {
                                 if ($scope.s4gLocalVar.allVar['ConsumptionHouse'].length > 0 && $scope.s4gLocalVar.allVar['ConsumptionHouse'][i] != null && !isNaN($scope.s4gLocalVar.allVar['ConsumptionHouse'][i])  && $scope.s4gLocalVar.allVar['ConsumptionHouse'][i] != '' && $scope.s4gLocalVar.allVar['ConsumptionHouse'][i] != [])
                                 {
-                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromGridLabel] = $scope.s4gLocalVar.allVar['ConsumptionHouse'][i];
-                                    resultForCSV[$scope.s4gLocalVar.PowerFromGridLabel] = $scope.s4gLocalVar.allVar['ConsumptionHouse'][i];
+                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.ConsumptionHouseLabel] = $scope.s4gLocalVar.allVar['ConsumptionHouse'][i];
+                                    resultForCSV[$scope.s4gLocalVar.ConsumptionHouseLabel] = $scope.s4gLocalVar.allVar['ConsumptionHouse'][i];
                                 } else
                                 {
-                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.PowerFromGridLabel] = 0;
-                                    resultForCSV[$scope.s4gLocalVar.PowerFromGridLabel] = 0;
+                                    result[$scope.s4gLocalVar.xTimestamps[i].getTime()][$scope.s4gLocalVar.ConsumptionHouseLabel] = 0;
+                                    resultForCSV[$scope.s4gLocalVar.ConsumptionHouseLabel] = 0;
                                 }
-                                headerCSV.push($scope.s4gLocalVar.PowerFromGridLabel);
+                                headerCSV.push($scope.s4gLocalVar.ConsumptionHouseLabel);
                             }
+
                             if ($scope.s4gLocalVar.select_SoC)
                             {
                                 if ($scope.s4gLocalVar.SoC.length > 0 && $scope.s4gLocalVar.SoC[i] != null && !isNaN($scope.s4gLocalVar.SoC[i])  && $scope.s4gLocalVar.SoC[i] != '' && $scope.s4gLocalVar.SoC[i] != [])
@@ -1854,9 +2182,11 @@ consumptionModule
                                 var consumptionDirect = temp_P_PV + temp_NegativeConsumptionBattery + temp_NegativeOverProduction;
                                 if (consumptionDirect<0)
                                 {
-                                    consumptionDirect = temp_P_PV + temp_NegativeConsumptionBattery;
+                                    //we are giving energy to the grid
+                                    //consumptionDirect = temp_P_PV + temp_NegativeConsumptionBattery;
+                                    consumptionDirect = 0
                                 }
-                                return Math.abs(consumptionDirect);
+                                return consumptionDirect;
                             });
                         }
                         else
@@ -1868,6 +2198,7 @@ consumptionModule
                     }
 
                 }
+
                 $scope.s4gLocalVar.calculateProduction = function(P_PV, NegativeOverProduction) {
                     //$scope.s4gLocalVar.allVar['ConsumptionDirect'] = absArray(sumArrays(sumArrays($scope.s4gLocalVar.allVar['P_PV'], $scope.s4gLocalVar.allVar['NegativeConsumptionBattery']), $scope.s4gLocalVar.allVar['NegativeOverProduction']));
                     if (P_PV != null && typeof P_PV == 'object' && NegativeOverProduction != null && typeof NegativeOverProduction == 'object' ) {
@@ -1914,6 +2245,7 @@ consumptionModule
                 }
 
                 $scope.getArray = [{a: 1, b:2}, {a:3, b:4}];
+
             }]);
 
 
@@ -1923,7 +2255,6 @@ consumptionModule.directive('consumptionModule', function () {
         scope: true,
         bindToController: {
             dashData: '=',
-            onUpdate: '&',
             startDate: '=',
             endDate: "=",
             s4gLocalVar: "="

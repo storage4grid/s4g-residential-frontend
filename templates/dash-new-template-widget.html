@@ -20,24 +20,24 @@
 					<th>Current<br />(KW)</th>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption">Self-produced</td>
-					<td>{{s4gLocalVar.todaySelfProduced}}</td>
-					<td>{{s4gVar.currentSelfProduced_final}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Self produced = PV + ESS_Positive">Self-produced</td>
+					<td data-toggle="tooltip" data-placement="top" title="Self produced = PV + ESS_Positive">{{s4gLocalVar.todaySelfProduced}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="Self produced = PV + ESS_Positive">{{s4gVar.currentSelfProduced_final}}</td>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption">Self-consumed</td>
-					<td>{{s4gLocalVar.todaySelfConsumed}}</td>
-					<td>{{s4gVar.currentSelfConsumed_final}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Self-consumed = - ESS_Negative + P_Load">Self-consumed</td>
+					<td data-toggle="tooltip" data-placement="top" title="Self-consumed = - ESS_Negative + P_Load">{{s4gLocalVar.todaySelfConsumed}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="Self-consumed = - ESS_Negative + P_Load">{{s4gVar.currentSelfConsumed_final}}</td>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption">From Grid</td>
-					<td>{{s4gLocalVar.todayEnergyFromGrid}}</td>
-					<td>{{s4gVar.currentFromGrid_final}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="From Grid = P_Grid">From Grid</td>
+					<td data-toggle="tooltip" data-placement="top" title="From Grid = P_Grid">{{s4gLocalVar.todayEnergyFromGrid}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="From Grid = P_Grid">{{s4gVar.currentFromGrid_final}}</td>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption">To Grid</td>
-					<td>{{s4gLocalVar.todayEnergyToGrid}}</td>
-					<td>{{s4gVar.currentToGrid}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="To Grid = P_GridNeg">To Grid</td>
+					<td data-toggle="tooltip" data-placement="top" title="To Grid = P_GridNeg">{{s4gLocalVar.todayEnergyToGrid}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="To Grid = P_GridNeg">{{s4gVar.currentToGrid}}</td>
 				</tr>
 
 			</table>

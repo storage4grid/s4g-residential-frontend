@@ -155,13 +155,30 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.PLoad.pathEnergy,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.PLoad.pathEnergy,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_LoadFronius = response.data;
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_LoadFronius = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_LoadFronius = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_LoadFronius = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_LoadFronius = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_LoadFronius = 0;
+                            }
+                        }
                         $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_LoadFronius = true;
                         $scope.updateGUIValues();
@@ -190,15 +207,32 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.EV.pathEnergy,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.EV.pathEnergy,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_EV = response.data;
-                        $scope.s4gLocalVar.sentAlerts = 0;
 
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_EV = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_EV = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_EV = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_EV = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_EV = 0;
+                            }
+                        }
+                        $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_EV = true;
                         $scope.updateGUIValues();
                     }, function errorCallback(response) {
@@ -222,13 +256,31 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.ESS.pathEnergyNegative,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.ESS.pathEnergyNegative,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_ESS_negative = response.data;
+
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_ESS_negative = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_ESS_negative = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_ESS_negative = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_ESS_negative = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_ESS_negative = 0;
+                            }
+                        }
                         $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_ESS_negative = true;
                         $scope.updateGUIValues();
@@ -251,13 +303,30 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.ESS.pathEnergyPositive,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.ESS.pathEnergyPositive,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_ESS_positive = response.data;
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_ESS_positive = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_ESS_positive = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_ESS_positive = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_ESS_positive = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_ESS_positive = 0;
+                            }
+                        }
                         $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_ESS_positive = true;
                         $scope.updateGUIValues();
@@ -282,13 +351,30 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.PAkku.pathEnergy,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.PAkku.pathEnergy,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_AkkuFronius = response.data;
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_AkkuFronius = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_AkkuFronius = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_AkkuFronius = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_AkkuFronius = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_AkkuFronius = 0;
+                            }
+                        }
                         $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_AkkuFronius = true;
                         $scope.updateGUIValues();
@@ -319,13 +405,30 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.PGrid.pathEnergy,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.PGrid.pathEnergy,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_GridFronius = response.data;
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_GridFronius = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_GridFronius = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_GridFronius = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_GridFronius = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_GridFronius = 0;
+                            }
+                        }
                         $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_GridFronius = true;
                         $scope.updateGUIValues();
@@ -356,13 +459,30 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.PGridNeg.pathEnergy,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.PGridNeg.pathEnergy,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_GridNegFronius = response.data;
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_GridNegFronius = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_GridNegFronius = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_GridNegFronius = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_GridNegFronius = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_GridNegFronius = 0;
+                            }
+                        }
                         $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_GridNegFronius = true;
                         $scope.updateGUIValues();
@@ -391,13 +511,30 @@ homeModule
 
                     $http({
                         method: 'GET',
-                        url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.dateToday+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.PV.pathEnergy,
+                        url: $rootScope.s4gVar.backendURL+'/ENERGY/DAY/'+$scope.dateToday+'/'+$rootScope.s4gVar.field.PV.pathEnergy,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(response) {
                         //console.log(response.data)
                         // this callback will be called asynchronously
                         // when the response is available
-                        $scope.s4gLocalVar.todayEnergyP_PV = response.data;
+                        var temp = response.data;
+                        if (temp == null || JSON.stringify(temp).includes("Empty")) {
+                            $scope.s4gLocalVar.todayEnergyP_PV = 0;
+                        } else {
+                            if (typeof temp == 'number')
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_PV = temp;
+                            }
+                            else if (typeof temp == 'string') {
+                                var receivedStructure = JSON.parse(temp);
+                                $scope.s4gLocalVar.todayEnergyP_PV = receivedStructure[1];
+                            } else if (typeof temp == 'object') {
+                                var receivedStructure = temp;
+                                $scope.s4gLocalVar.todayEnergyP_PV = receivedStructure[1];
+                            } else {
+                                $scope.s4gLocalVar.todayEnergyP_PV = 0;
+                            }
+                        }
                         $scope.s4gLocalVar.sentAlerts = 0;
                         $scope.s4gLocalVar.receivedTodayEnergyP_PV = true;
                         $scope.updateGUIValues();

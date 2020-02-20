@@ -30,26 +30,24 @@ dashHistoricTimeSeries.directive('dashHistoricTimeSeries', function(){
         templateUrl : 'templates/dash-historic-time-series.html',
         bindToController: {
             // the x axis label
-            dashXLabel : '=',
+            dashXLabel : "=",
             // the y axis label
             dashY1Label: "=",
             dashY2Label: "=",
             // the graph data
-            dashData : '=',
+            dashData : "=",
             // the min Y
-            dashMinY : '<',
+            dashMinY : "<",
             // the max Y
-            dashMaxY : '<',
-            // the output callback
-            onUpdate : '&',
+            dashMaxY : "<",
             // sensor name
-            dashSensorName : '<',
-            startDate: '=',
+            dashSensorName : "<",
+            startDate: "=",
 			endDate: "=",
 			s4gLocalVar: "="
         },
         controller: dashHistoricTimeSeriesController,
-        controllerAs: 'ctrl'
+        controllerAs: "ctrl"
 
     }
 });
@@ -125,7 +123,7 @@ function dashHistoricTimeSeriesController($scope, $element, $attrs) {
                 rotateYLabel:true,
                 showMaxMin:true,
                 // set the label
-                axisLabel : "DateTime UTC",
+                axisLabel : "Date",
                 height:60,
                 ticks:null,
                 width:75,
@@ -368,70 +366,79 @@ function dashHistoricTimeSeriesController($scope, $element, $attrs) {
 
         $scope.dashMinY = 0;
         $scope.dashMaxY = 0;
-        if (data != undefined) {
+        if (data != undefined && data!=[]) {
             var calculateSum = false;
-
-
+            //we want to calculate min and max only if all the series has the same dimension
+            var dimension = 0;
+            var continueWithCalculation = true;
             // iterate over series in data to understand if at least one data is bar. In that case the max is the sum of all the series
             for (var dataSeries2 in data) {
+                /*
+                if (data[dataSeries2].hasOwnProperty("values")) {
+                    if (dimension === 0) {
+                        dimension = data[dataSeries2].values.length;
+                    }
+                    if (dimension != data[dataSeries2].values.length) {
+                        continueWithCalculation = false;
+                    }
+                }
+
+                 */
                 if (data[dataSeries2].hasOwnProperty("type") && data[dataSeries2].type == "bar") {
                     calculateSum = true;
                 }
             }
             var totalMin = 0;
             var totalMax = 0;
-            // iterate over series in data
-            for (var dataSeries in data) {
-                if (data[dataSeries].hasOwnProperty("key") && data[dataSeries].key != "no data") {
-                    // iterate over values in a single series
-                    var maxInSerie = Number($scope.dashMinY);
-                    var minInSerie = Number($scope.dashMaxY);
-                    for (var value in data[dataSeries].values) {
-                        if (data[dataSeries].values[value].y!=undefined && !isNaN(data[dataSeries].values[value].y)) {
-                            if (isNaN(minInSerie))
-                            {
-                                minInSerie = data[dataSeries].values[value].y;
-                            }
-                            if (isNaN(maxInSerie))
-                            {
-                                maxInSerie = data[dataSeries].values[value].y;
-                            }
-                            // search for min/max
-                            if (data[dataSeries].values[value].y < minInSerie) {
-                                minInSerie = data[dataSeries].values[value].y;
-                            } else if (data[dataSeries].values[value].y > maxInSerie) {
-                                maxInSerie = data[dataSeries].values[value].y;
+            if (continueWithCalculation) {
+                // iterate over series in data
+                for (var dataSeries in data) {
+                    if (data[dataSeries].hasOwnProperty("key") && data[dataSeries].key != "no data") {
+                        // iterate over values in a single series
+                        var maxInSerie = Number($scope.dashMaxY);
+                        var minInSerie = Number($scope.dashMinY);
+                        for (var value in data[dataSeries].values) {
+                            if (data[dataSeries].values[value].y != undefined && !isNaN(data[dataSeries].values[value].y)) {
+                                if (isNaN(minInSerie)) {
+                                    minInSerie = data[dataSeries].values[value].y;
+                                }
+                                if (isNaN(maxInSerie)) {
+                                    maxInSerie = data[dataSeries].values[value].y;
+                                }
+                                // search for min/max
+                                if (data[dataSeries].values[value].y < minInSerie) {
+                                    minInSerie = data[dataSeries].values[value].y;
+                                } else if (data[dataSeries].values[value].y > maxInSerie) {
+                                    maxInSerie = data[dataSeries].values[value].y;
+                                }
                             }
                         }
-                    }
-                    if (calculateSum)
-                    {
-                        if (minInSerie<totalMin) {
-                            totalMin = minInSerie;
-                        }
-                        totalMax += maxInSerie;
-                    }
-                    else
-                    {
-                        if (minInSerie<totalMin) {
-                            totalMin = minInSerie;
-                        }
+                        if (calculateSum) {
+                            if (minInSerie < totalMin) {
+                                totalMin = minInSerie;
+                            }
+                            totalMax += maxInSerie;
+                        } else {
+                            if (minInSerie < totalMin) {
+                                totalMin = minInSerie;
+                            }
 
-                        if (maxInSerie>totalMax) {
-                            totalMax = maxInSerie;
+                            if (maxInSerie > totalMax) {
+                                totalMax = maxInSerie;
+                            }
                         }
                     }
                 }
+                $scope.dashMinY = Number(totalMin);
+                $scope.dashMaxY = Number(totalMax) + 10;
+                //if (calculateSum) {
+                    $scope.dashOptions.chart.yDomain1 = [$scope.dashMinY, $scope.dashMaxY];
+                /*}
+                else
+                {
+                    $scope.dashOptions.chart.yDomain1 = [];
+                }*/
             }
-            $scope.dashMinY = totalMin;
-            $scope.dashMaxY = Number(totalMax) + 10;
-            //if (calculateSum) {
-                $scope.dashOptions.chart.yDomain1 = [$scope.dashMinY, $scope.dashMaxY];
-            /*}
-            else
-            {
-                $scope.dashOptions.chart.yDomain1 = [];
-            }*/
         }
     };
 	/**
@@ -499,7 +506,11 @@ function dashHistoricTimeSeriesController($scope, $element, $attrs) {
             }
             else
             {
-
+                //if the endData < startDate we set it to startDate
+                $scope.endDate=$scope.startDate;
+                $scope.setStartDate($scope.startDate);
+                $scope.setEndDate($scope.endDate);
+                //TODO: warning, but only the first time
             }
 
         }
@@ -720,22 +731,26 @@ function dashHistoricTimeSeriesController($scope, $element, $attrs) {
         if (diffSeconds<=(2*24*60*60*1000))
         {
             $scope.s4gLocalVar.currentSelection='day';
+            $scope.dashOptions.chart.yAxis1.axisLabel = 'W';
         }
         else
         {
             if (diffSeconds<=((14)*24*60*60)*1000) {
                 //$scope.s4gLocalVar.currentSelection='week';
                 $scope.s4gLocalVar.currentSelection='day';
+                $scope.dashOptions.chart.yAxis1.axisLabel = 'W';
             }
             else
             {
 
                 if (diffSeconds<=((364)*24*60*60)*1000) {
                     $scope.s4gLocalVar.currentSelection='month';
+                    $scope.dashOptions.chart.yAxis1.axisLabel = 'Wh';
                 }
                 else
                 {
                     $scope.s4gLocalVar.currentSelection= 'year';
+                    $scope.dashOptions.chart.yAxis1.axisLabel = 'Wh';
                 }
             }
         }
@@ -754,6 +769,7 @@ function dashHistoricTimeSeriesController($scope, $element, $attrs) {
             result += "selectedCell";
         else
             result += "";
+
         /*
 	    //get difference in seconds
         var diffSeconds = ($scope.endDate.getTime() - $scope.startDate.getTime());

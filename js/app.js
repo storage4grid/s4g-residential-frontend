@@ -155,15 +155,18 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
     $rootScope.s4gVar.lastNowPV = new Date();
 
 
+    //$rootScope.s4gVar.demoEnabled = false;
     $rootScope.s4gVar.demoEnabled = true;
+    //$rootScope.s4gVar.installationHouse = "Bolzano";
+    $rootScope.s4gVar.installationHouse = "27";
 
     if (!$rootScope.s4gVar.demoEnabled)
     {
         //demo NOT Enabled
 
-        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>';
-        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>';
-        $rootScope.s4gVar.mqttBrokerPort = <ADD_YOUR_DATA>;
+        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>'; 
+        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>'; 
+        $rootScope.s4gVar.mqttBrokerPort = <ADD_YOUR_DATA>; 
 
         $rootScope.s4gVar.maxTimeForStatusPV = 20;
         $rootScope.s4gVar.maxTimeForStatusESS = 20;
@@ -172,7 +175,7 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
         $rootScope.s4gVar.edynaP_PV = 'S4G-GW-EDYNA-0015';
         $rootScope.s4gVar.edynaP_ESS = 'S4G-GW-EDYNA-0016';
         $rootScope.s4gVar.edynaPLoad = 'S4G-GW-EDYNA-0017';
-        $rootScope.s4gVar.installation = "InstallationHouseBolzano";
+        $rootScope.s4gVar.installation = "InstallationHouse"+$rootScope.s4gVar.installationHouse;
 
 
         $rootScope.s4gVar.field = {};
@@ -205,38 +208,39 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
     {
         //demoEnabled
 
-        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>';
-        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>';
-        $rootScope.s4gVar.mqttBrokerPort = <ADD_YOUR_DATA>;
+        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>'; 
+        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>'; 
+        $rootScope.s4gVar.mqttBrokerPort = <ADD_YOUR_DATA>; 
 
         $rootScope.s4gVar.maxTimeForStatusPV = 40;
         $rootScope.s4gVar.maxTimeForStatusESS = 40;
 
-        $rootScope.s4gVar.installation = "InstallationHouse27"
+        $rootScope.s4gVar.installation = "InstallationHouse"+$rootScope.s4gVar.installationHouse;
+
 
         $rootScope.s4gVar.field = {};
         $rootScope.s4gVar.field.EV = {};
-        $rootScope.s4gVar.field.EV.pathEnergy="";
-        $rootScope.s4gVar.field.EV.pathP="";
+        $rootScope.s4gVar.field.EV.pathEnergy=$rootScope.s4gVar.installation+"/EV-Load/ALL";
+        $rootScope.s4gVar.field.EV.pathP=$rootScope.s4gVar.installation+"/EV-Load";
         $rootScope.s4gVar.field.PV = {};
-        $rootScope.s4gVar.field.PV.pathEnergy=$rootScope.s4gVar.installation+"/photovoltaic";
+        $rootScope.s4gVar.field.PV.pathEnergy=$rootScope.s4gVar.installation+"/photovoltaic/ALL";
         $rootScope.s4gVar.field.PV.pathP=$rootScope.s4gVar.installation+"/photovoltaic";
         $rootScope.s4gVar.field.ESS = {};
-        $rootScope.s4gVar.field.ESS.pathEnergy=$rootScope.s4gVar.installation+"/battery";
-        $rootScope.s4gVar.field.ESS.pathEnergyPositive=$rootScope.s4gVar.installation+"/battery/POSITIVE/GROUPBY/1";
-        $rootScope.s4gVar.field.ESS.pathEnergyNegative=$rootScope.s4gVar.installation+"/battery/NEGATIVE/GROUPBY/1";
+        $rootScope.s4gVar.field.ESS.pathEnergy=$rootScope.s4gVar.installation+"/battery/ALL";
+        $rootScope.s4gVar.field.ESS.pathEnergyPositive=$rootScope.s4gVar.installation+"/battery/POSITIVE";
+        $rootScope.s4gVar.field.ESS.pathEnergyNegative=$rootScope.s4gVar.installation+"/battery/NEGATIVE";
         $rootScope.s4gVar.field.ESS.pathP=$rootScope.s4gVar.installation+"/battery";
         $rootScope.s4gVar.field.PLoad = {};
-        $rootScope.s4gVar.field.PLoad.pathEnergy=$rootScope.s4gVar.installation+"/load";
+        $rootScope.s4gVar.field.PLoad.pathEnergy=$rootScope.s4gVar.installation+"/load/ALL";
         $rootScope.s4gVar.field.PLoad.pathP=$rootScope.s4gVar.installation+"/load";
         $rootScope.s4gVar.field.PAkku = {};
-        $rootScope.s4gVar.field.PAkku.pathEnergy=$rootScope.s4gVar.installation+"/battery";
+        $rootScope.s4gVar.field.PAkku.pathEnergy=$rootScope.s4gVar.installation+"/battery/ALL";
         $rootScope.s4gVar.field.PAkku.pathP=$rootScope.s4gVar.installation+"/battery";
         $rootScope.s4gVar.field.PGrid = {};
-        $rootScope.s4gVar.field.PGrid.pathEnergy=$rootScope.s4gVar.installation+"/grid/POSITIVE/GROUPBY/1";
+        $rootScope.s4gVar.field.PGrid.pathEnergy=$rootScope.s4gVar.installation+"/grid/POSITIVE";
         $rootScope.s4gVar.field.PGrid.pathP=$rootScope.s4gVar.installation+"/grid/POSITIVE/GROUPBY/1";
         $rootScope.s4gVar.field.PGridNeg = {};
-        $rootScope.s4gVar.field.PGridNeg.pathEnergy=$rootScope.s4gVar.installation+"/grid/NEGATIVE/GROUPBY/1";
+        $rootScope.s4gVar.field.PGridNeg.pathEnergy=$rootScope.s4gVar.installation+"/grid/NEGATIVE";
         $rootScope.s4gVar.field.PGridNeg.pathP=$rootScope.s4gVar.installation+"/grid/NEGATIVE/GROUPBY/1";
     }
 
