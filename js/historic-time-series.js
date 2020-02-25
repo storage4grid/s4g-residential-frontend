@@ -735,7 +735,8 @@ function dashHistoricTimeSeriesController($scope, $element, $attrs) {
         }
         else
         {
-            if (diffSeconds<=((14)*24*60*60)*1000) {
+            //if (diffSeconds<=((14)*24*60*60)*1000) {
+            if (diffSeconds<=((6)*24*60*60)*1000) {
                 //$scope.s4gLocalVar.currentSelection='week';
                 $scope.s4gLocalVar.currentSelection='day';
                 $scope.dashOptions.chart.yAxis1.axisLabel = 'W';

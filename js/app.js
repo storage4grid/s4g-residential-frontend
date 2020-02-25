@@ -157,16 +157,16 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
 
     //$rootScope.s4gVar.demoEnabled = false;
     $rootScope.s4gVar.demoEnabled = true;
-    //$rootScope.s4gVar.installationHouse = "Bolzano";
-    $rootScope.s4gVar.installationHouse = "27";
+    $rootScope.s4gVar.installationHouse = "Bolzano";
+    //$rootScope.s4gVar.installationHouse = "27";
 
     if (!$rootScope.s4gVar.demoEnabled)
     {
         //demo NOT Enabled
 
-        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>'; 
-        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>'; 
-        $rootScope.s4gVar.mqttBrokerPort = <ADD_YOUR_DATA>; 
+        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>';  
+        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>';  
+        $rootScope.s4gVar.mqttBrokerPort = '<ADD_YOUR_DATA>';
 
         $rootScope.s4gVar.maxTimeForStatusPV = 20;
         $rootScope.s4gVar.maxTimeForStatusESS = 20;
@@ -208,9 +208,9 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
     {
         //demoEnabled
 
-        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>'; 
-        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>'; 
-        $rootScope.s4gVar.mqttBrokerPort = <ADD_YOUR_DATA>; 
+        $rootScope.s4gVar.backendURL = '<ADD_YOUR_DATA>';  
+        $rootScope.s4gVar.mqttBrokerIp = '<ADD_YOUR_DATA>';  
+        $rootScope.s4gVar.mqttBrokerPort = '<ADD_YOUR_DATA>';
 
         $rootScope.s4gVar.maxTimeForStatusPV = 40;
         $rootScope.s4gVar.maxTimeForStatusESS = 40;

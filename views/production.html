@@ -18,20 +18,22 @@
 					</button>
 				</div>
 				<div class="modal-body centered-div">
-
+<!--
 					<div class="checkbox">
 						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_ESS">SMX P_ESS</label>
 					</div>
+					-->
 					<div class="checkbox">
-						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_EV">SMX P_EV</label>
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_P_EV">P_EV</label>
 					</div>
+					<!--
 					<div class="checkbox">
 						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_PCC">SMX P_PCC</label>
-					</div>
+					</div>-->
 					<div class="checkbox">
-						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_PV">SMX P_PV</label>
+						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SMX_P_PV">P_PV</label>
 					</div>
-					<div class="checkbox">
+					<!--<div class="checkbox">
 						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_froniusBattery">fronius P_Battery</label>
 					</div>
 					<div class="checkbox">
@@ -42,7 +44,7 @@
 					</div>
 					<div class="checkbox">
 						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_froniusPhotovoltaic">fronius Photovoltaic</label>
-					</div>
+					</div>-->
 					<div class="checkbox">
 						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_ConsumptionBattery">Consumption Battery</label>
 					</div>
@@ -58,7 +60,7 @@
 					<div class="checkbox">
 						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_power2Batt">{{s4gLocalVar.Power2BatteryLabel}}</label>
 					</div>
-					<div class="checkbox">
+					<div class="checkbox" ng-if="(s4gLocalVar.diffInSeconds <= 6 * 24 * 60 * 60)">
 						<label><input type="checkbox" value="" ng-model="s4gLocalVar.select_SoC">{{s4gLocalVar.SoCLabel}}</label>
 					</div>
 					<br />
