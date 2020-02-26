@@ -746,12 +746,12 @@ function dashHistoricTimeSeriesController($scope, $element, $attrs) {
 
                 if (diffSeconds<=((364)*24*60*60)*1000) {
                     $scope.s4gLocalVar.currentSelection='month';
-                    $scope.dashOptions.chart.yAxis1.axisLabel = 'Wh';
+                    $scope.dashOptions.chart.yAxis1.axisLabel = 'KWh';
                 }
                 else
                 {
                     $scope.s4gLocalVar.currentSelection= 'year';
-                    $scope.dashOptions.chart.yAxis1.axisLabel = 'Wh';
+                    $scope.dashOptions.chart.yAxis1.axisLabel = 'KWh';
                 }
             }
         }

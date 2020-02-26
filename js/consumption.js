@@ -677,35 +677,42 @@ consumptionModule
                                     switch(key) {
                                         case "energy_pv":
                                             $scope.s4gLocalVar.allVar['ready_P_PV'] = true;
+                                            tempResult[key] = divAllElementsOfBackendENERGYResult(tempResult[key], 1000);
                                             $scope.s4gLocalVar.allVar['P_PV'] = tempResult[key];
                                             break;
                                         case "energy_load":
                                             $scope.s4gLocalVar.allVar['ready_NegConsHouseJSON'] = true;
+                                            tempResult[key] = divAllElementsOfBackendENERGYResult(tempResult[key], 1000);
                                             $scope.s4gLocalVar.allVar['NegConsHouseJSON'] = tempResult[key];
                                             break;
                                         case "energy_ev":
                                             $scope.s4gLocalVar.allVar['ready_P_EV'] = true;
+                                            tempResult[key] = divAllElementsOfBackendENERGYResult(tempResult[key], 1000);
                                             $scope.s4gLocalVar.allVar['P_EV'] = tempResult[key];
                                             break;
                                         case "energy_from_battery":
                                             $scope.s4gLocalVar.allVar['ready_PowerFromBattery'] = true;
+                                            tempResult[key] = divAllElementsOfBackendENERGYResult(tempResult[key], 1000);
                                             $scope.s4gLocalVar.allVar['PowerFromBattery'] = tempResult[key];
                                             break;
                                         case "energy_to_battery":
                                             $scope.s4gLocalVar.allVar['ready_NegativeConsumptionBattery'] = true;
+                                            tempResult[key] = divAllElementsOfBackendENERGYResult(tempResult[key], 1000);
                                             $scope.s4gLocalVar.allVar['NegativeConsumptionBattery'] = tempResult[key];
                                             break;
                                         case "energy_from_grid":
                                             $scope.s4gLocalVar.allVar['ready_PositivePowerFromGrid'] = true;
+                                            tempResult[key] = divAllElementsOfBackendENERGYResult(tempResult[key], 1000);
                                             $scope.s4gLocalVar.allVar['PositivePowerFromGrid'] = tempResult[key];
                                             break;
                                         case "energy_to_grid":
                                             $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] = true;
+                                            tempResult[key] = divAllElementsOfBackendENERGYResult(tempResult[key], 1000);
                                             $scope.s4gLocalVar.allVar['NegativeOverProduction'] = tempResult[key];
                                             break;
                                         case "total_energy_load":
                                             $scope.s4gLocalVar.allVar['ready_energyBalance'] = true;
-                                            $scope.s4gLocalVar.allVar['energyBalance'] = tempResult[key];
+                                            $scope.s4gLocalVar.allVar['energyBalance'] = tempResult[key]/1000;
                                             break;
                                         case "total_energy_pv":
                                             break;
@@ -915,6 +922,19 @@ consumptionModule
                         } else {
                             return [];
                         }
+                    }
+                }
+
+                var divAllElementsOfBackendENERGYResult = function(JSONresult, dividend) {
+                    if (JSONresult != null && JSONresult!=[] && (typeof JSONresult  == 'object') && JSONresult.length>0) {
+                        return JSONresult.map(function (val, idx) {
+                            JSONresult[idx][1] = val[1]/dividend;
+                            return val;
+                        });
+                    }
+                    else
+                    {
+                        return {};
                     }
                 }
 
