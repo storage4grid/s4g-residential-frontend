@@ -387,7 +387,7 @@ productionModule
                                             break;
                                         case "total_energy_pv":
                                             $scope.s4gLocalVar.allVar['ready_energyBalance'] = true;
-                                            $scope.s4gLocalVar.allVar['energyBalance'] = tempResult[key]/1000;
+                                            $scope.s4gLocalVar.allVar['energyBalance'] = tempResult[key];
                                             break;
                                         case "total_energy_ev":
                                             break;
