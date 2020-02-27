@@ -661,7 +661,7 @@ homeModule
                             energy_powerfromgrid -> todayEnergyP_GridFronius
                         */
                         $scope.s4gLocalVar.todaySelfProduced = Math.round((($scope.s4gLocalVar.todayEnergyP_PV + $scope.s4gLocalVar.todayEnergyP_ESS_positive)/1000)*100)/100;
-                        $scope.s4gLocalVar.todaySelfConsumed = Math.round(((-$scope.s4gLocalVar.todayEnergyP_ESS_negative + $scope.s4gLocalVar.todayEnergyP_LoadFronius)/1000)*100)/100;
+                        $scope.s4gLocalVar.todaySelfConsumed = Math.round(((-$scope.s4gLocalVar.todayEnergyP_ESS_negative + $scope.s4gLocalVar.todayEnergyP_LoadFronius + $scope.s4gLocalVar.todayEnergyP_EV )/1000)*100)/100;
                         $scope.s4gLocalVar.todayEnergyFromGrid = Math.round(($scope.s4gLocalVar.todayEnergyP_GridFronius/1000)*100)/100;
                         $scope.s4gLocalVar.todayEnergyToGrid = Math.abs(Math.round((-$scope.s4gLocalVar.todayEnergyP_GridNegFronius/1000)*100)/100);
 

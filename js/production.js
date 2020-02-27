@@ -1359,7 +1359,7 @@ productionModule
                             }
                             if (found) {
                                 $scope.s4gLocalVar.allVar["Power2Grid"] = [];
-                                $scope.s4gLocalVar.allVar["Power2Grid"] = sumArrays(minusArray($scope.s4gLocalVar.allVar["NegativeOverProduction"]), minusArray($scope.s4gLocalVar.allVar["NegativeConsumptionBattery"]));
+                                $scope.s4gLocalVar.allVar["Power2Grid"] = minusArray($scope.s4gLocalVar.allVar["NegativeOverProduction"]);
                             }
                             $scope.s4gLocalVar.allVar["ready_Power2Grid"] = true;
                             if ($scope.s4gLocalVar.allVar["Power2Grid"] != null && $scope.s4gLocalVar.allVar["Power2Grid"].length > 0 && $scope.s4gLocalVar.allVar["Power2Grid"] != []) {

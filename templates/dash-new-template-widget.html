@@ -20,24 +20,24 @@
 					<th>Current<br />(KW)</th>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Self produced = PV + ESS_Positive">Self-produced</td>
-					<td data-toggle="tooltip" data-placement="top" title="Self produced = PV + ESS_Positive">{{s4gLocalVar.todaySelfProduced}}</td>
-					<td data-toggle="tooltip" data-placement="top" title="Self produced = PV + ESS_Positive">{{s4gVar.currentSelfProduced_final}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Produced = Photovoltaic + Discharging Storage">Self-produced</td>
+					<td data-toggle="tooltip" data-placement="top" title="Produced = Photovoltaic + Discharging Storage">{{s4gLocalVar.todaySelfProduced}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="Produced = Photovoltaic + Discharging Storage">{{s4gVar.currentSelfProduced_final}}</td>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Self-consumed = - ESS_Negative + P_Load">Self-consumed</td>
-					<td data-toggle="tooltip" data-placement="top" title="Self-consumed = - ESS_Negative + P_Load">{{s4gLocalVar.todaySelfConsumed}}</td>
-					<td data-toggle="tooltip" data-placement="top" title="Self-consumed = - ESS_Negative + P_Load">{{s4gVar.currentSelfConsumed_final}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Consumed = Charging Storage + House Loads">Self-consumed</td>
+					<td data-toggle="tooltip" data-placement="top" title="Consumed = Charging Storage + House Loads">{{s4gLocalVar.todaySelfConsumed}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="Consumed = Charging Storage + House Loads">{{s4gVar.currentSelfConsumed_final}}</td>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="From Grid = P_Grid">From Grid</td>
-					<td data-toggle="tooltip" data-placement="top" title="From Grid = P_Grid">{{s4gLocalVar.todayEnergyFromGrid}}</td>
-					<td data-toggle="tooltip" data-placement="top" title="From Grid = P_Grid">{{s4gVar.currentFromGrid_final}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="From Grid = Consumed from Grid">From Grid</td>
+					<td data-toggle="tooltip" data-placement="top" title="From Grid = Consumed from Grid">{{s4gLocalVar.todayEnergyFromGrid}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="From Grid = Consumed from Grid">{{s4gVar.currentFromGrid_final}}</td>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="To Grid = P_GridNeg">To Grid</td>
-					<td data-toggle="tooltip" data-placement="top" title="To Grid = P_GridNeg">{{s4gLocalVar.todayEnergyToGrid}}</td>
-					<td data-toggle="tooltip" data-placement="top" title="To Grid = P_GridNeg">{{s4gVar.currentToGrid}}</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="To Grid = Produced towards Grid">To Grid</td>
+					<td data-toggle="tooltip" data-placement="top" title="To Grid = Produced towards Grid">{{s4gLocalVar.todayEnergyToGrid}}</td>
+					<td data-toggle="tooltip" data-placement="top" title="To Grid = Produced towards Grid">{{s4gVar.currentToGrid}}</td>
 				</tr>
 
 			</table>
@@ -58,7 +58,7 @@
 				<tr>
 					<th></th>
 					<th>SoC</th>
-					<th>Status</th>
+					<th data-toggle="tooltip" data-placement="top" data-html="true" title="Possible status: EMPTY, CHARGING, IDLE, HOLDING, DISCHARGING, FULL">Status</th>
 				</tr>
 				<tr class="rowTableConsumption">
 					<td class="leftCellTableConsumption">Storage</td>
@@ -74,7 +74,7 @@
 				<tr>
 					<th></th>
 					<th>SoC</th>
-					<th>Status</th>
+					<th data-toggle="tooltip" data-placement="top" data-html="true" title="Possible status: No status, Charging, Not charging">Status</th>
 				</tr>
 				<tr class="rowTableConsumption">
 					<td class="leftCellTableConsumption">Electric Vehicle</td>
