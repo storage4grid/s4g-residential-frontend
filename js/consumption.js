@@ -102,13 +102,13 @@ consumptionModule
                 $scope.s4gLocalVar.allVar['ConsumptionHouse'] = [];
 
                 //$scope.s4gLocalVar.select_SMX_P_ESS = true;
-                $scope.s4gLocalVar.select_P_EV = true;
+                //$scope.s4gLocalVar.select_P_EV = true;
                 //$scope.s4gLocalVar.select_SMX_P_PCC = true;
-                $scope.s4gLocalVar.select_SMX_P_PV = true;
+                //$scope.s4gLocalVar.select_SMX_P_PV = true;
                 //$scope.s4gLocalVar.select_froniusBattery = true;
                 //$scope.s4gLocalVar.select_froniusLoad = true;
                 //$scope.s4gLocalVar.select_froniusPhotovoltaic = true;
-                $scope.s4gLocalVar.select_production = true;
+                //$scope.s4gLocalVar.select_production = true;
                 $scope.s4gLocalVar.select_powerFromBattery = true;
                 $scope.s4gLocalVar.select_consumptionDirect = true;
                 $scope.s4gLocalVar.select_consumptionHouse = true;
@@ -122,13 +122,13 @@ consumptionModule
                     if ($scope.s4gLocalVar.select_all) {
 
                         //$scope.s4gLocalVar.select_SMX_P_ESS = true;
-                        $scope.s4gLocalVar.select_P_EV = true;
+                        //$scope.s4gLocalVar.select_P_EV = true;
                         //$scope.s4gLocalVar.select_SMX_P_PCC = true;
-                        $scope.s4gLocalVar.select_SMX_P_PV = true;
+                        //$scope.s4gLocalVar.select_SMX_P_PV = true;
                         //$scope.s4gLocalVar.select_froniusBattery = true;
                         //$scope.s4gLocalVar.select_froniusLoad = true;
                         //$scope.s4gLocalVar.select_froniusPhotovoltaic = true;
-                        $scope.s4gLocalVar.select_production = true;
+                        //$scope.s4gLocalVar.select_production = true;
                         $scope.s4gLocalVar.select_powerFromBattery = true;
                         $scope.s4gLocalVar.select_consumptionDirect = true;
                         $scope.s4gLocalVar.select_powerFromGrid = true;
@@ -137,13 +137,13 @@ consumptionModule
 
 
                         //$scope.s4gLocalVar.select_SMX_P_ESS = false;
-                        $scope.s4gLocalVar.select_P_EV = false;
+                        //$scope.s4gLocalVar.select_P_EV = false;
                         //$scope.s4gLocalVar.select_SMX_P_PCC = false;
-                        $scope.s4gLocalVar.select_SMX_P_PV = false;
+                        //$scope.s4gLocalVar.select_SMX_P_PV = false;
                         //$scope.s4gLocalVar.select_froniusBattery = false;
                         //$scope.s4gLocalVar.select_froniusLoad = false;
                         //$scope.s4gLocalVar.select_froniusPhotovoltaic = false;
-                        $scope.s4gLocalVar.select_production = false;
+                        //$scope.s4gLocalVar.select_production = false;
                         $scope.s4gLocalVar.select_powerFromBattery = false;
                         $scope.s4gLocalVar.select_consumptionDirect = false;
                         $scope.s4gLocalVar.select_powerFromGrid = false;
@@ -241,9 +241,11 @@ consumptionModule
 
                 $scope.s4gLocalVar.getEnergyConsumption = function () {
                     $scope.urlEnergyCons = $rootScope.s4gVar.backendURL + '/ENERGY/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.field.PLoad.pathEnergy;
+                    /*
                     if ($rootScope.s4gVar.demoEnabled) {
                         $scope.urlEnergyCons = $rootScope.s4gVar.backendURL + '/ENERGY/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.installation + '/load';
                     }
+                    */
 
                     //TODO if the data in the datawarehouse will never be corrected it should be necessary to find a way to correct also the energy Balance with sign change in specific dates already threated in correctArrayWithDates
                     $scope.s4gLocalVar.getDataFromBackend_number($scope.urlEnergyCons, 'energyBalance');
@@ -2133,6 +2135,7 @@ consumptionModule
                         atLeastOne = true;
                     }
                     */
+                    /*
                     if ($scope.s4gLocalVar.select_P_EV)
                     {
                         if (!$scope.s4gLocalVar.allVar['ready_P_EV'])
@@ -2142,6 +2145,7 @@ consumptionModule
                         }
                         atLeastOne = true;
                     }
+                     */
                     /*
                     if ($scope.s4gLocalVar.select_SMX_P_PCC)
                     {
@@ -2153,6 +2157,7 @@ consumptionModule
                         atLeastOne = true;
                     }
                      */
+                    /*
                     if ($scope.s4gLocalVar.select_SMX_P_PV)
                     {
                         if (!$scope.s4gLocalVar.allVar['ready_P_PV'])
@@ -2162,6 +2167,7 @@ consumptionModule
                         }
                         atLeastOne = true;
                     }
+                     */
                     /*
                     if ($scope.s4gLocalVar.select_froniusBattery)
                     {
@@ -2227,6 +2233,7 @@ consumptionModule
                         }
                     }
 
+                    /*
                     if ($scope.s4gLocalVar.select_production)
                     {
                         if (!$scope.s4gLocalVar.allVar['ready_Production'])
@@ -2236,6 +2243,7 @@ consumptionModule
                         }
                         atLeastOne = true;
                     }
+                     */
                     if ($scope.s4gLocalVar.select_powerFromBattery)
                     {
                         //the value PowerFromBattery is actually equal to the consumptionHouse
@@ -2275,6 +2283,7 @@ consumptionModule
                                 headerCSV.push("SMX_P_ESS");
                             }
                             */
+                            /*
                             if ($scope.s4gLocalVar.select_P_EV)
                             {
                                 if ($scope.s4gLocalVar.allVar['P_EV'].length > 0 && $scope.s4gLocalVar.allVar['P_EV'][i] != null && !isNaN($scope.s4gLocalVar.allVar['P_EV'][i]) && $scope.s4gLocalVar.allVar['P_EV'][i] != '' && $scope.s4gLocalVar.allVar['P_EV'][i] != [])
@@ -2288,6 +2297,7 @@ consumptionModule
                                 }
                                 headerCSV.push("P_EV");
                             }
+                             */
                             /*
                             if ($scope.s4gLocalVar.select_SMX_P_PCC)
                             {
@@ -2303,6 +2313,7 @@ consumptionModule
                                 headerCSV.push("SMX_P_PCC");
                             }
                              */
+                            /*
                             if ($scope.s4gLocalVar.select_SMX_P_PV)
                             {
                                 if ($scope.s4gLocalVar.allVar['P_PV'].length > 0 && $scope.s4gLocalVar.allVar['P_PV'][i] != null && !isNaN($scope.s4gLocalVar.allVar['P_PV'][i]) && $scope.s4gLocalVar.allVar['P_PV'][i] != '' && $scope.s4gLocalVar.allVar['P_PV'][i] != [])
@@ -2316,6 +2327,7 @@ consumptionModule
                                 }
                                 headerCSV.push("P_PV");
                             }
+                            */
                             /*
                             if ($scope.s4gLocalVar.select_froniusBattery)
                             {
@@ -2398,6 +2410,7 @@ consumptionModule
                                 }
                                 headerCSV.push($scope.s4gLocalVar.ConsumptionDirectLabel);
                             }
+                            /*
                             if ($scope.s4gLocalVar.select_production)
                             {
                                 if ($scope.s4gLocalVar.production.length > 0 && $scope.s4gLocalVar.production[i] != null  && !isNaN($scope.s4gLocalVar.production[i]) && $scope.s4gLocalVar.production[i] != '' && $scope.s4gLocalVar.production[i] != [])
@@ -2411,6 +2424,7 @@ consumptionModule
                                 }
                                 headerCSV.push($scope.s4gLocalVar.ProductionLabel);
                             }
+                             */
                             if ($scope.s4gLocalVar.select_powerFromBattery)
                             {
                                 if ($scope.s4gLocalVar.allVar['PowerFromBattery'].length > 0 && $scope.s4gLocalVar.allVar['PowerFromBattery'][i] != null && !isNaN($scope.s4gLocalVar.allVar['PowerFromBattery'][i]) && $scope.s4gLocalVar.allVar['PowerFromBattery'][i] != '' && $scope.s4gLocalVar.allVar['PowerFromBattery'][i] != [])
