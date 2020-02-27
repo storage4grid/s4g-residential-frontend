@@ -20,12 +20,12 @@
 					<th>Current<br />(KW)</th>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Produced = Photovoltaic + Discharging Storage">Self-produced</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Produced = Photovoltaic + Discharging Storage">Produced</td>
 					<td data-toggle="tooltip" data-placement="top" title="Produced = Photovoltaic + Discharging Storage">{{s4gLocalVar.todaySelfProduced}}</td>
 					<td data-toggle="tooltip" data-placement="top" title="Produced = Photovoltaic + Discharging Storage">{{s4gVar.currentSelfProduced_final}}</td>
 				</tr>
 				<tr class="rowTableConsumption">
-					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Consumed = Charging Storage + House Loads">Self-consumed</td>
+					<td class="leftCellTableConsumption" data-toggle="tooltip" data-placement="top" title="Consumed = Charging Storage + House Loads">Consumed</td>
 					<td data-toggle="tooltip" data-placement="top" title="Consumed = Charging Storage + House Loads">{{s4gLocalVar.todaySelfConsumed}}</td>
 					<td data-toggle="tooltip" data-placement="top" title="Consumed = Charging Storage + House Loads">{{s4gVar.currentSelfConsumed_final}}</td>
 				</tr>
@@ -44,13 +44,13 @@
 		</div>
 
 		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
-			Photovoltaics: <span style="color:{{getColorOfStatus(s4gVar.currentPVSystem1Status);}}">{{s4gVar.currentPVSystem1Status}}</span>
+			Photovoltaics: <span data-toggle="tooltip" data-placement="top" title="Ok, Warning, Error" style="color:{{getColorOfStatus(s4gVar.currentPVSystem1Status);}}">{{s4gVar.currentPVSystem1Status}}</span>
 		</div>
 		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
-			Storage: <span style="color:{{getColorOfStatus(s4gVar.currentStorage1Status);}}">{{s4gVar.currentStorage1Status}}</span>
+			Storage: <span  data-toggle="tooltip" data-placement="top" title="Ok, Warning, Error" style="color:{{getColorOfStatus(s4gVar.currentStorage1Status);}}">{{s4gVar.currentStorage1Status}}</span>
 		</div>
 		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
-			Electric Vehicle: <span style="color:{{getColorOfStatus(s4gVar.currentEV1Status);}}">{{s4gVar.currentEV1Status}}</span>
+			Electric Vehicle: <span  data-toggle="tooltip" data-placement="top" title="Ok, Warning, Error" style="color:{{getColorOfStatus(s4gVar.currentEV1Status);}}">{{s4gVar.currentEV1Status}}</span>
 		</div>
 
 		<div ng-if="inputData.widgetType == 'battery-status'" class="table_consumption" >
@@ -58,7 +58,7 @@
 				<tr>
 					<th></th>
 					<th>SoC</th>
-					<th data-toggle="tooltip" data-placement="top" data-html="true" title="Possible status: EMPTY, CHARGING, IDLE, HOLDING, DISCHARGING, FULL">Status</th>
+					<th data-toggle="tooltip" data-placement="top" data-html="true" title="EMPTY, CHARGING, IDLE, HOLDING, DISCHARGING, FULL">Status</th>
 				</tr>
 				<tr class="rowTableConsumption">
 					<td class="leftCellTableConsumption">Storage</td>
@@ -74,7 +74,7 @@
 				<tr>
 					<th></th>
 					<th>SoC</th>
-					<th data-toggle="tooltip" data-placement="top" data-html="true" title="Possible status: No status, Charging, Not charging">Status</th>
+					<th data-toggle="tooltip" data-placement="top" data-html="true" title="No status, Charging, Not charging">Status</th>
 				</tr>
 				<tr class="rowTableConsumption">
 					<td class="leftCellTableConsumption">Electric Vehicle</td>
