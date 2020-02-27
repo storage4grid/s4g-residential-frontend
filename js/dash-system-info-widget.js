@@ -25,7 +25,8 @@ dashSystemInfoWidget
                     $scope.s4gLocalVar.sentAlerts = 0;
                     $scope.s4gLocalVar.receivedTodayEnergyP_PV = true;
                     $scope.s4gLocalVar.todayEnergyP_PV = 0;
-
+                    $scope.startDateString = "2019-12-02";
+                    $scope.startDateStringIta = "02.12.2019";
                     $scope.storageHealth = 54;
 
                     var today = new Date();
@@ -143,7 +144,7 @@ dashSystemInfoWidget
                         //get Energy associated to P_PV
 
                         $scope.s4gLocalVar.receivedTodayEnergyP_PV = false;
-                        $scope.startDate = new Date("2011-05-23");
+                        $scope.startDate = new Date($scope.startDateString);
 
                         var dd = $scope.startDate.getDate();
                         var mm = $scope.startDate.getMonth()+1;
