@@ -158,15 +158,41 @@ dashSystemInfoWidget
                             mm='0'+mm;
                         }
                         $scope.startDate = yyyy+'-'+mm+'-'+dd;
+                        $scope.urlEnergyProd = $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.startDate+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.PV.pathEnergy;
+                        /*
+                        if ($rootScope.s4gVar.demoEnabled)
+                        {
+                            $scope.urlEnergyProd = $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.startDate+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.installation+'/photovoltaic';
+                        }
+                        */
                         $http({
                             method: 'GET',
-                            url: $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.startDate+'/'+$scope.dateTomorrow+'/'+$rootScope.s4gVar.field.PV.pathEnergy,
+                            url: $scope.urlEnergyProd,
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                         }).then(function successCallback(response) {
                             //console.log(response.data)
                             // this callback will be called asynchronously
                             // when the response is available
-                            $scope.s4gLocalVar.todayEnergyP_PV = response.data;
+                            var temp = response.data;
+                            if (temp== null || JSON.stringify(temp).includes("Empty message"))
+                            {
+                                $scope.s4gLocalVar.todayEnergyP_PV = 0;
+                            }
+                            else
+                            {
+                                if (typeof temp == 'string') {
+                                    $scope.s4gLocalVar.todayEnergyP_PV = Math.round(Number(temp)*100)/100;
+                                }
+                                else
+                                {
+                                    if (typeof temp == 'object') {
+                                        $scope.s4gLocalVar.todayEnergyP_PV = Math.round(Number(temp[1])*100)/100;
+                                    }
+                                    else {
+                                        $scope.s4gLocalVar.todayEnergyP_PV = Math.round(temp * 100) / 100;
+                                    }
+                                }
+                            }
                             $scope.s4gLocalVar.sentAlerts = 0;
                             $scope.s4gLocalVar.receivedTodayEnergyP_PV = true;
                         }, function errorCallback(response) {

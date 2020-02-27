@@ -187,7 +187,12 @@ consumptionModule
                             if (typeof temp == 'string') {
                                 $scope.s4gLocalVar.allVar[varName] = Math.round(Number(temp) * 100) / 100;
                             } else {
-                                $scope.s4gLocalVar.allVar[varName] = Math.round(temp * 100) / 100;
+                                if (typeof temp == 'object') {
+                                    $scope.s4gLocalVar.allVar[varName] = Math.round(Number(temp[1])*100)/100;
+                                }
+                                else {
+                                    $scope.s4gLocalVar.allVar[varName] = Math.round(temp * 100) / 100;
+                                }
                             }
                             $scope.s4gLocalVar.allVar['ready_' + varName] = true;
                             $scope.s4gLocalVar.updateChartVariables();

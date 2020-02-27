@@ -209,7 +209,12 @@ productionModule
                             }
                             else
                             {
-                                $scope.s4gLocalVar.allVar[varName] = Math.round(temp*100)/100;
+                                if (typeof temp == 'object') {
+                                    $scope.s4gLocalVar.allVar[varName] = Math.round(Number(temp[1])*100)/100;
+                                }
+                                else {
+                                    $scope.s4gLocalVar.allVar[varName] = Math.round(temp * 100) / 100;
+                                }
                             }
                             $scope.s4gLocalVar.allVar['ready_'+varName] = true;
                             $scope.s4gLocalVar.updateChartVariables();
@@ -431,10 +436,12 @@ productionModule
                 $scope.s4gLocalVar.getEnergyProduction = function()
                 {
                     $scope.urlEnergyProd = $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.startDateItalianFormat+'/'+$scope.endDateItalianFormat+'/'+$rootScope.s4gVar.field.PV.pathEnergy;
+                    /*
                     if ($rootScope.s4gVar.demoEnabled)
                     {
                         $scope.urlEnergyProd = $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.startDateItalianFormat+'/'+$scope.endDateItalianFormat+'/'+$rootScope.s4gVar.installation+'/photovoltaic';
                     }
+                     */
                     //TODO if the data in the datawarehouse will never be corrected it should be necessary to find a way to correct also the energy Balance with sign change in specific dates already threated in correctArrayWithDates
                     $scope.s4gLocalVar.getDataFromBackend_number($scope.urlEnergyProd,'energyBalance');
 
