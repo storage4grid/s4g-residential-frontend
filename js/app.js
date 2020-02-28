@@ -545,6 +545,9 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
                     if (key.includes("SOC")) {
                         $rootScope.s4gVar.fronius.CurrentBatteryStateOfCharge = receivedValue;
                     }
+                    if (key.includes("EV-Load")) {
+                        $rootScope.s4gVar.currentEV = receivedValue;
+                    }
                     if ($rootScope.s4gVar.demoEnabled) {
                         //elaborate also ESS-status="EMPTY",SOC=7.0,P-Akku=-2491.8,P-Grid=-93.88,P-Load=153.12,P-PV=2758.1
                         if (key.includes("P-Akku")) {
@@ -572,7 +575,9 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
                         if (key.includes("ESS-status")) {
                             $rootScope.s4gVar.CurrentBatteryStatus = receivedValue;
                         }
-                        //TODO we still need $rootScope.s4gVar.currentEV = ...;
+                        if (key.includes("EV-Load")) {
+                            $rootScope.s4gVar.currentEV = receivedValue;
+                        }
                     }
                 }
             }
@@ -684,7 +689,7 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
         var currentFroPGridPos = ($rootScope.s4gVar.currentFroPGrid>0)?$rootScope.s4gVar.currentFroPGrid:0;
         var currentFroPGridNeg = ($rootScope.s4gVar.currentFroPGrid<0)?$rootScope.s4gVar.currentFroPGrid:0;
         $rootScope.s4gVar.currentSelfProduced_final = Math.round((($rootScope.s4gVar.currentPV + P_ESS_positive)/1000)*100)/100;
-        $rootScope.s4gVar.currentSelfConsumed_final = Math.round(((P_ESS_negative + $rootScope.s4gVar.currentFroPLoad)/1000)*100)/100;
+        $rootScope.s4gVar.currentSelfConsumed_final = Math.round(((P_ESS_negative + $rootScope.s4gVar.currentFroPLoad + Number($rootScope.s4gVar.currentEV))/1000)*100)/100;
         $rootScope.s4gVar.currentFromGrid_final = Math.round((currentFroPGridPos/1000)*100)/100;
         $rootScope.s4gVar.currentToGrid = Math.abs(Math.round((currentFroPGridNeg/1000)*100)/100);
 

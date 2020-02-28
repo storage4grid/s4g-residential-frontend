@@ -119,7 +119,7 @@ homeModule
 
                 $scope.getCurrentCarSoC = function()
                 {
-                    return $scope.s4gLocalVar.currentCarSoC;
+                    return Number($scope.s4gLocalVar.currentCarSoC)*100;
                 }
                 $scope.getCurrentCarRemainingTime = function()
                 {
