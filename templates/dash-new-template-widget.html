@@ -44,13 +44,13 @@
 		</div>
 
 		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
-			Photovoltaics: <span data-toggle="tooltip" data-placement="top" title="Ok, Warning, Error" style="color:{{getColorOfStatus(s4gVar.currentPVSystem1Status);}}">{{s4gVar.currentPVSystem1Status}}</span>
+			Photovoltaics: <span class="custom-tooltip" style="color:{{getColorOfStatus(s4gVar.currentPVSystem1Status);}}">{{s4gVar.currentPVSystem1Status}}<span class="custom-tooltiptext"><b>OK</b>: data received regularly<br /><b>Warning</b>: temporary lack of real-time data<br /><b>ERROR</b>: system disconnected</span></span>
 		</div>
 		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
-			Storage: <span  data-toggle="tooltip" data-placement="top" title="Ok, Warning, Error" style="color:{{getColorOfStatus(s4gVar.currentStorage1Status);}}">{{s4gVar.currentStorage1Status}}</span>
+			Storage: <span class="custom-tooltip" style="color:{{getColorOfStatus(s4gVar.currentStorage1Status);}}">{{s4gVar.currentStorage1Status}}<span class="custom-tooltiptext"><b>OK</b>: data received regularly<br /><b>Warning</b>: temporary lack of real-time data<br /><b>ERROR</b>: system disconnected</span></span>
 		</div>
 		<div ng-if="inputData.widgetType == 'system-health'" class="text_value" >
-			Electric Vehicle: <span  data-toggle="tooltip" data-placement="top" title="Ok, Warning, Error" style="color:{{getColorOfStatus(s4gVar.currentEV1Status);}}">{{s4gVar.currentEV1Status}}</span>
+			Electric Vehicle: <span class="custom-tooltip" style="color:{{getColorOfStatus(s4gVar.currentEV1Status);}}">{{s4gVar.currentEV1Status}}<span class="custom-tooltiptext"><b>OK</b>: data received regularly<br /><b>Warning</b>: temporary lack of real-time data<br /><b>ERROR</b>: system disconnected</span></span>
 		</div>
 
 		<div ng-if="inputData.widgetType == 'battery-status'" class="table_consumption" >
@@ -58,12 +58,12 @@
 				<tr>
 					<th></th>
 					<th>SoC</th>
-					<th data-toggle="tooltip" data-placement="top" data-html="true" title="EMPTY, CHARGING, IDLE, HOLDING, DISCHARGING, FULL">Status</th>
+					<th class="small-custom-tooltip">Status<span class="small-custom-tooltiptext"><b>EMPTY</b><br /><b>CHARGING</b><br /><b>IDLE</b><br /><b>HOLDING</b><br /><b>DISCHARGING</b><br /><b>FULL</b></span></th>
 				</tr>
 				<tr class="rowTableConsumption">
 					<td class="leftCellTableConsumption">Storage</td>
 					<td>{{getCurrentBatteryStateOfCharge()}} %</td>
-					<td>{{getCurrentBatteryStatus()}}</td>
+					<td class="small-custom-tooltip">{{getCurrentBatteryStatus()}}<span class="small-custom-tooltiptext"><b>EMPTY</b><br /><b>CHARGING</b><br /><b>IDLE</b><br /><b>HOLDING</b><br /><b>DISCHARGING</b><br /><b>FULL</b></span></td>
 				</tr>
 			</table>
 		</div>
@@ -74,12 +74,12 @@
 				<tr>
 					<th></th>
 					<th>SoC</th>
-					<th data-toggle="tooltip" data-placement="top" data-html="true" title="No status, Charging, Not charging">Status</th>
+					<th class="small-custom-tooltip" >Status<span class="small-custom-tooltiptext"><b>No status</b><br /><b>Charging</b><br /><b>Not charging</b></span></th>
 				</tr>
 				<tr class="rowTableConsumption">
 					<td class="leftCellTableConsumption">Electric Vehicle</td>
 					<td>{{getCurrentCarSoC()}} %</td>
-					<td>{{getCurrentCarStatus()}}</td>
+					<td class="small-custom-tooltip" >{{getCurrentCarStatus()}}<span class="small-custom-tooltiptext"><b>No status</b><br /><b>Charging</b><br /><b>Not charging</b></span></td>
 				</tr>
 			</table>
 		</div>

@@ -527,6 +527,16 @@ body {
 		display: table;
 		font-size: 1.5vw;
 	}
+	/* Tooltip text size */
+	.custom-tooltip .custom-tooltiptext {
+		font-size: 1.3vw;
+		width: 25vw;
+	}
+	/* Small Tooltip text size */
+	.small-custom-tooltip .small-custom-tooltiptext {
+		font-size: 1vw;
+		width: 10vw;
+	}
 }
 @media ( max-width : 768px) {
 
@@ -802,6 +812,19 @@ body {
 		text-align: left;
 		display: table;
 		font-size: 3vw;
+	}
+
+	/* Tooltip text size */
+	.custom-tooltip .custom-tooltiptext {
+		font-size: 2.5vw;
+		width: 40vw;
+	}
+
+
+	/* Small Tooltip text size */
+	.small-custom-tooltip .small-custom-tooltiptext {
+		font-size: 2.5vw;
+		width: 20vw;
 	}
 }
 
@@ -1311,4 +1334,73 @@ input:checked + .slider:before {
 .disabledButton
 {
 	opacity: 0.5;
+}
+
+/* Tooltip container */
+.custom-tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+/* Tooltip text */
+.custom-tooltip .custom-tooltiptext {
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 3px;
+
+	/* Position the tooltip text */
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -25vw;
+
+	/* Fade in tooltip */
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-weight: normal;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.custom-tooltip:hover .custom-tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}
+
+
+/* Tooltip container */
+.small-custom-tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+/* Tooltip text */
+.small-custom-tooltip .small-custom-tooltiptext {
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 3px;
+
+	/* Position the tooltip text */
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -5vw;
+
+	/* Fade in tooltip */
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-weight: normal;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.small-custom-tooltip:hover .small-custom-tooltiptext {
+	visibility: visible;
+	opacity: 1;
 }

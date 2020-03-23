@@ -21,13 +21,14 @@ dashSystemInfoWidget
                     $rootScope.s4gVar.currentPositionPage = "systemInfo";
                     $rootScope.s4gVar.currentView = "System Information";
                     $scope.s4gLocalVar ={};
-                    $scope.s4gLocalVar.currentBatteryCycles = -1;
+                    $scope.s4gLocalVar.currentBatteryCycles = 0;
                     $scope.s4gLocalVar.sentAlerts = 0;
                     $scope.s4gLocalVar.receivedTodayEnergyP_PV = true;
                     $scope.s4gLocalVar.todayEnergyP_PV = 0;
                     $scope.startDateString = "2019-12-02";
                     $scope.startDateStringIta = "02.12.2019";
                     $scope.storageHealth = 54;
+                    $scope.s4gLocalVar.maximumPower = 10;
 
                     var today = new Date();
 
@@ -73,7 +74,7 @@ dashSystemInfoWidget
 
                     $scope.getUtilization = function()
                     {
-                        var capacity = 5000;
+                        var capacity = $scope.s4gLocalVar.maximumPower*1000;
                         var currentUtilization = ($rootScope.s4gVar.currentPV/capacity)*100;
                         currentUtilization = Math.round(currentUtilization * 100) / 100
                         return currentUtilization;
@@ -123,14 +124,42 @@ dashSystemInfoWidget
                     {
                         $http({
                             method: 'GET',
-                            url: $rootScope.s4gVar.backendURL+'/Battery/cycles',
+                            url: $rootScope.s4gVar.backendURL+$rootScope.s4gVar.field.batteryCycles+"/"+$scope.startDateString,
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                         }).then(function successCallback(response) {
                             //console.log(response.data)
                             // this callback will be called asynchronously
                             // when the response is available
-                            $scope.s4gLocalVar.currentBatteryCycles = response.data;
-                            $scope.s4gLocalVar.sentAlerts = 0;
+
+                            var temp = response.data;
+                            if (temp== null || JSON.stringify(temp).includes("Empty message"))
+                            {
+                                $scope.sendAlert("Error in contacting the server: the system will try again but no alert will be shown again");
+                            }
+                            else {
+                                var tempResult = {};
+                                if (typeof temp == 'string') {
+                                    tempResult = JSON.parse(temp);
+                                } else {
+                                    tempResult = temp;
+                                }
+
+                                if (typeof tempResult == 'object' && tempResult != null) {
+                                    if ("total_battery_cycles" in tempResult)
+                                    {
+                                        var total_battery_cycles = Math.round(Number(tempResult["total_battery_cycles"]));
+                                        $scope.s4gLocalVar.currentBatteryCycles = total_battery_cycles;
+                                        $scope.s4gLocalVar.sentAlerts = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    if(typeof tempResult == 'number') {
+                                        $scope.s4gLocalVar.currentBatteryCycles = Math.round(Number(tempResult));
+                                        $scope.s4gLocalVar.sentAlerts = 0;
+                                    }
+                                }
+                            }
                         }, function errorCallback(response) {
                             $scope.sendAlert("Error in contacting the server: the system will try again but no alert will be shown again");
                             //console.log(response)

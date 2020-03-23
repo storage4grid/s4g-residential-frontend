@@ -52,11 +52,15 @@ productionModule
                 $scope.s4gLocalVar.freqYearSelectMinutes = 31*24*60;
 
                 $scope.s4gLocalVar.allVar = {};
-                $scope.s4gLocalVar.allVar["energyBalance"] = 0;
+                $scope.s4gLocalVar.allVar["EnergyPV"] = 0;
+                $scope.s4gLocalVar.allVar["EnergyP_ESS_Positive"] = 0;
+
+                $scope.s4gLocalVar.allVar["EnergyBalance"] = 0;
                 //$scope.s4gLocalVar.allVar["P_ESS"] = [];
                 $scope.s4gLocalVar.allVar["P_EV"] = [];
                 //$scope.s4gLocalVar.allVar["P_PCC"] = [];
                 $scope.s4gLocalVar.allVar["P_PV"] = [];
+
                 //$scope.s4gLocalVar.allVar["FroniusBattery"] = [];
                 //$scope.s4gLocalVar.allVar["FroniusGrid"] = [];
                 //$scope.s4gLocalVar.allVar["NegativeFroniusGrid"] = [];
@@ -102,6 +106,9 @@ productionModule
                 $scope.s4gLocalVar.allVar['ready_Power2Batt'] = false;
                 $scope.s4gLocalVar.allVar['ready_SoC_JSON'] = false;
                 $scope.s4gLocalVar.allVar['ready_EnergyBalance'] = false;
+
+                $scope.s4gLocalVar.allVar["ready_EnergyPV"] = false;
+                $scope.s4gLocalVar.allVar["ready_EnergyP_ESS_Positive"] = false;
 
                 //$scope.s4gLocalVar.select_SMX_P_ESS = true;
                 $scope.s4gLocalVar.select_P_EV = true;
@@ -198,7 +205,7 @@ productionModule
                         {
                             $scope.s4gLocalVar.allVar[varName] = 0;
                             $scope.s4gLocalVar.allVar['ready_'+varName] = true;
-                            $scope.s4gLocalVar.updateChartVariables();
+                            $scope.s4gLocalVar.updateTotalEnergy();
                             // console.log("Empty Message");
                             // $scope.insertDataInChart("P_EV",[], [], '#990000');
                         }
@@ -217,13 +224,13 @@ productionModule
                                 }
                             }
                             $scope.s4gLocalVar.allVar['ready_'+varName] = true;
-                            $scope.s4gLocalVar.updateChartVariables();
+                            $scope.s4gLocalVar.updateTotalEnergy();
                             //$scope.insertDataInChart("P_EV",$scope.s4gLocalVar.xTimestamps, tempDataEV, '#990000');
                         }
                     }, function errorCallback(response) {
                         $scope.s4gLocalVar.allVar[varName] = 0;
                         $scope.s4gLocalVar.allVar['ready_'+varName] = true;
-                        $scope.s4gLocalVar.updateChartVariables();
+                        $scope.s4gLocalVar.updateTotalEnergy();
                     });
                 }
 
@@ -268,6 +275,87 @@ productionModule
                 }
 
 
+                $scope.s4gLocalVar.getESSFromOverallReply = function(url) {
+
+                    $http({
+                        method: 'GET',
+                        url: url,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    }).then(function successCallback(response) {
+                        //console.log(response.data)
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        var temp = response.data;
+                        if (temp== null || JSON.stringify(temp).includes("Empty message"))
+                        {
+                            $scope.s4gLocalVar.allVar['EnergyP_ESS_Positive'] = 0;
+                            $scope.s4gLocalVar.allVar['ready_EnergyP_ESS_Positive'] = true;
+                            $scope.s4gLocalVar.updateTotalEnergy();
+                        }
+                        else
+                        {
+                            var tempResult = {};
+                            if (typeof temp == 'string') {
+                                tempResult = JSON.parse(temp);
+                            }
+                            else
+                            {
+                                tempResult = temp;
+                            }
+
+                            if (typeof tempResult == 'object' && tempResult != null) {
+
+                                var total_energy_pv = 0;
+                                var ESS_charg = 0;
+                                var ESS_discharging = 0;
+                                for (var key in tempResult) {
+                                    switch(key) {
+                                        case "energy_pv":
+                                            break;
+                                        case "energy_load":
+                                            break;
+                                        case "energy_ev":
+                                            break;
+                                        case "energy_from_battery":
+                                            break;
+                                        case "energy_to_battery":
+                                            break;
+                                        case "energy_from_grid":
+                                            break;
+                                        case "energy_to_grid":
+                                            break;
+                                        case "total_energy_load":
+                                            break;
+                                        case "total_energy_pv":
+                                            break;
+                                        case "total_energy_ev":
+                                            break;
+                                        case "total_energy_from_battery":
+                                            $scope.s4gLocalVar.allVar['ready_EnergyP_ESS_Positive'] = true;
+                                            $scope.s4gLocalVar.allVar['EnergyP_ESS_Positive'] = tempResult[key];
+                                            break;
+                                        case "total_energy_to_battery":
+                                            break;
+                                        case "total_energy_from_grid":
+                                            break;
+                                        case "total_energy_to_grid":
+                                            break;
+                                        default:
+                                        // code block
+                                    }
+                                }
+                            }
+                            $scope.s4gLocalVar.updateTotalEnergy();
+                        }
+                    }, function errorCallback(response) {
+
+                        $scope.s4gLocalVar.allVar['EnergyP_ESS_Positive'] = 0;
+                        $scope.s4gLocalVar.allVar['ready_EnergyP_ESS_Positive'] = true;
+                        $scope.s4gLocalVar.updateTotalEnergy();
+                    });
+                }
+
+
                 $scope.s4gLocalVar.getAllDataFromBackend = function(url)
                 {
                     /*
@@ -307,7 +395,7 @@ productionModule
                     $scope.s4gLocalVar.allVar['ready_PositiveConsumptionBattery'] = false;
                     $scope.s4gLocalVar.allVar['ready_PositiveOverProduction'] = false;
                     $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] = false;
-                    $scope.s4gLocalVar.allVar['ready_energyBalance'] = false;
+                    $scope.s4gLocalVar.allVar['ready_EnergyBalance'] = false;
                     $http({
                         method: 'GET',
                         url: url,
@@ -325,7 +413,7 @@ productionModule
                             $scope.s4gLocalVar.allVar['ready_PositiveConsumptionBattery'] = true;
                             $scope.s4gLocalVar.allVar['ready_PositiveOverProduction'] = true;
                             $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] = true;
-                            $scope.s4gLocalVar.allVar['ready_energyBalance'] = true;
+                            $scope.s4gLocalVar.allVar['ready_EnergyBalance'] = true;
 
                             $scope.s4gLocalVar.allVar['P_PV'] = [];
                             $scope.s4gLocalVar.allVar['P_EV'] = [];
@@ -333,7 +421,7 @@ productionModule
                             $scope.s4gLocalVar.allVar['PositiveConsumptionBattery'] = [];
                             $scope.s4gLocalVar.allVar['PositiveOverProduction'] = [];
                             $scope.s4gLocalVar.allVar['NegativeOverProduction'] = [];
-                            $scope.s4gLocalVar.allVar['energyBalance'] = 0;
+                            $scope.s4gLocalVar.allVar['EnergyBalance'] = 0;
                             $scope.s4gLocalVar.updateChartVariables();
                             // console.log("Empty Message");
                             // $scope.insertDataInChart("P_EV",[], [], '#990000');
@@ -350,7 +438,9 @@ productionModule
                             }
 
                             if (typeof tempResult == 'object' && tempResult != null) {
-
+                                var total_energy_pv = 0;
+                                var ESS_charg = 0;
+                                var ESS_discharging = 0;
                                 for (var key in tempResult) {
                                     switch(key) {
                                         case "energy_pv":
@@ -391,14 +481,15 @@ productionModule
                                         case "total_energy_load":
                                             break;
                                         case "total_energy_pv":
-                                            $scope.s4gLocalVar.allVar['ready_energyBalance'] = true;
-                                            $scope.s4gLocalVar.allVar['energyBalance'] = tempResult[key];
+                                            total_energy_pv = tempResult[key];
                                             break;
                                         case "total_energy_ev":
                                             break;
                                         case "total_energy_from_battery":
+                                            ESS_discharging = tempResult[key];
                                             break;
                                         case "total_energy_to_battery":
+                                            ESS_charg = tempResult[key];
                                             break;
                                         case "total_energy_from_grid":
                                             break;
@@ -408,6 +499,8 @@ productionModule
                                             // code block
                                     }
                                 }
+                                $scope.s4gLocalVar.allVar['ready_EnergyBalance'] = true;
+                                $scope.s4gLocalVar.allVar['EnergyBalance'] = total_energy_pv + ESS_discharging;
                             }
                             $scope.s4gLocalVar.updateChartVariables();
                         }
@@ -418,7 +511,7 @@ productionModule
                         $scope.s4gLocalVar.allVar['ready_PositiveConsumptionBattery'] = true;
                         $scope.s4gLocalVar.allVar['ready_PositiveOverProduction'] = true;
                         $scope.s4gLocalVar.allVar['ready_NegativeOverProduction'] = true;
-                        $scope.s4gLocalVar.allVar['ready_energyBalance'] = true;
+                        $scope.s4gLocalVar.allVar['ready_EnergyBalance'] = true;
 
                         $scope.s4gLocalVar.allVar['P_PV'] = [];
                         $scope.s4gLocalVar.allVar['P_EV'] = [];
@@ -426,14 +519,14 @@ productionModule
                         $scope.s4gLocalVar.allVar['PositiveConsumptionBattery'] = [];
                         $scope.s4gLocalVar.allVar['PositiveOverProduction'] = [];
                         $scope.s4gLocalVar.allVar['NegativeOverProduction'] = [];
-                        $scope.s4gLocalVar.allVar['energyBalance'] = 0;
+                        $scope.s4gLocalVar.allVar['EnergyBalance'] = 0;
                         $scope.s4gLocalVar.updateChartVariables();
                     });
                 }
 
                 //get Energy Production
                 //http://130.192.86.142:18081/ENERGY/2018-01-05/2019-01-05/S4G-GW-EDYNA-0015
-                $scope.s4gLocalVar.getEnergyProduction = function()
+                $scope.s4gLocalVar.getEnergyPV = function()
                 {
                     $scope.urlEnergyProd = $rootScope.s4gVar.backendURL+'/ENERGY/'+$scope.startDateItalianFormat+'/'+$scope.endDateItalianFormat+'/'+$rootScope.s4gVar.field.PV.pathEnergy;
                     /*
@@ -443,8 +536,21 @@ productionModule
                     }
                      */
                     //TODO if the data in the datawarehouse will never be corrected it should be necessary to find a way to correct also the energy Balance with sign change in specific dates already threated in correctArrayWithDates
-                    $scope.s4gLocalVar.getDataFromBackend_number($scope.urlEnergyProd,'energyBalance');
+                    $scope.s4gLocalVar.getDataFromBackend_number($scope.urlEnergyProd,'EnergyPV');
 
+                }
+
+                $scope.s4gLocalVar.getEnergyPSSPositive = function () {
+                    if ($scope.startDateItalianFormat == $scope.endDateItalianFormat)
+                    {
+                        //http://130.192.86.142:11111/ENERGY/DAY/2020-03-01/InstallationHouseBolzano
+                        $scope.urlEnergyCons = $rootScope.s4gVar.backendURL + '/ENERGY/DAY/' + $scope.startDateItalianFormat + '/'+ $rootScope.s4gVar.installation;
+                        $scope.s4gLocalVar.getESSFromOverallReply($scope.urlEnergyCons);
+                    }
+                    else {
+                        $scope.urlEnergyCons = $rootScope.s4gVar.backendURL + '/ENERGY/' + $scope.startDateItalianFormat + '/' + $scope.endDateItalianFormat + '/' + $rootScope.s4gVar.field.ESS.pathEnergyPositive;
+                        $scope.s4gLocalVar.getDataFromBackend_number($scope.urlEnergyCons, 'EnergyP_ESS_Positive');
+                    }
                 }
 
 
@@ -828,7 +934,8 @@ productionModule
                             $scope.s4gLocalVar.getNegativeOverProduction();
                             $scope.s4gLocalVar.getPositiveOverProduction();
                             $scope.s4gLocalVar.getNegConsHouseJSON();
-                            $scope.s4gLocalVar.getEnergyProduction();
+                            $scope.s4gLocalVar.getEnergyPV();
+                            $scope.s4gLocalVar.getEnergyPSSPositive();
                         }
                         else
                         {
@@ -979,6 +1086,16 @@ productionModule
                     else
                     {
                         return {};
+                    }
+                }
+
+                $scope.s4gLocalVar.updateTotalEnergy = function () {
+                    if ($scope.s4gLocalVar.allVar["ready_EnergyPV"] && $scope.s4gLocalVar.allVar["ready_EnergyP_ESS_Positive"])
+                    {
+                        var EnergyPV = Number($scope.s4gLocalVar.allVar["EnergyPV"]);
+                        var EnergyP_ESS_Positive = Number($scope.s4gLocalVar.allVar["EnergyP_ESS_Positive"]);
+                        $scope.s4gLocalVar.allVar['ready_EnergyBalance'] = true;
+                        $scope.s4gLocalVar.allVar['EnergyBalance'] = EnergyPV + EnergyP_ESS_Positive;
                     }
                 }
 

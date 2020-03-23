@@ -202,6 +202,8 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
         $rootScope.s4gVar.field.PGridNeg = {};
         $rootScope.s4gVar.field.PGridNeg.pathEnergy="";
         $rootScope.s4gVar.field.PGridNeg.pathP="";
+        // http://130.192.86.142:11111/Battery/realcycles/InstallationHouseBolzano
+        $rootScope.s4gVar.field.batteryCycles="Battery/realcycles/"+$rootScope.s4gVar.installation;
 
     }
     else
@@ -242,6 +244,9 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
         $rootScope.s4gVar.field.PGridNeg = {};
         $rootScope.s4gVar.field.PGridNeg.pathEnergy=$rootScope.s4gVar.installation+"/grid/NEGATIVE";
         $rootScope.s4gVar.field.PGridNeg.pathP=$rootScope.s4gVar.installation+"/grid/NEGATIVE/GROUPBY/1";
+
+        // http://130.192.86.142:11111/Battery/realcycles/InstallationHouseBolzano
+        $rootScope.s4gVar.field.batteryCycles="/Battery/realcycles/"+$rootScope.s4gVar.installation;
     }
 
     $rootScope.$on("$routeChangeError", function(event, next, previous, error) {

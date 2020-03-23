@@ -18,7 +18,7 @@
     </div>
 
     <div class="historic_time_series_energy">
-        Total Energy {{s4gVar.currentPositionPage=='Consumption'?"Consumed":"Produced"}}: {{s4gLocalVar.round2Digit(s4gLocalVar.allVar['energyBalance']/1000)}} KWh
+        Total Energy {{s4gVar.currentPositionPage=='Consumption'?"Consumed":"Produced"}}: {{s4gLocalVar.round2Digit(s4gLocalVar.allVar['EnergyBalance']/1000)}} KWh
         <button type="button" class="button-export-data" data-toggle="modal" data-target="#exportDataModal">
             Export data
         </button>
