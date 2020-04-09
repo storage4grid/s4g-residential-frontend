@@ -504,84 +504,87 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
             //FRONIUS/Data/v1.0/Datastreams(136)/Observations Payload [125] -> InstallationHouse27 ESS-status="CHARGING",SOC=73.0,P-Akku=-2491.8,P-Grid=-93.88,P-Load=153.12,P-PV=2758.1 1570528518452000000
 
             var parts = message.payloadString.split(" ");
-            var installationHouse = parts[0];
-            var timestamp = parts[parts.length-1];
-            var numDataGroups = (parts.length - 1);
+            var localInstallationHouse = parts[0];
+            //process data only if they are related to the right installation House
+            if ($rootScope.s4gVar.installationHouse==localInstallationHouse) {
+                var timestamp = parts[parts.length - 1];
+                var numDataGroups = (parts.length - 1);
 
-            //avoid to read the first, second and the last part (containing the topic, GUI and the timestamp)
+                //avoid to read the first, second and the last part (containing the topic, GUI and the timestamp)
 
-            for (var indexDataGroup = 1; indexDataGroup < numDataGroups; indexDataGroup++) {
-                var data = parts[indexDataGroup];
+                for (var indexDataGroup = 1; indexDataGroup < numDataGroups; indexDataGroup++) {
+                    var data = parts[indexDataGroup];
 
-                var dataParts = data.split(",");
+                    var dataParts = data.split(",");
 
-                for (var i = 0; i < dataParts.length; i++) {
-                    //for (var singleData in dataParts) {
-                    var singleData = dataParts[i];
-                    var singleDataParts = singleData.split("=");
-                    var key = singleDataParts[0];
-                    var receivedValue = singleDataParts[1];
+                    for (var i = 0; i < dataParts.length; i++) {
+                        //for (var singleData in dataParts) {
+                        var singleData = dataParts[i];
+                        var singleDataParts = singleData.split("=");
+                        var key = singleDataParts[0];
+                        var receivedValue = singleDataParts[1];
 
-                    //remove quotes and double quotes
-                    // ['"] is a character class, matches both single and double quotes. you can replace this with " to only match double quotes.
-                    // +: one or more quotes, chars, as defined by the preceding char-class (optional)
-                    // g: the global flag. This tells JS to apply the regex to the entire string. If you omit this, you'll only replace a single char.
-                    receivedValue = receivedValue.replace(/['"]+/g, '');
+                        //remove quotes and double quotes
+                        // ['"] is a character class, matches both single and double quotes. you can replace this with " to only match double quotes.
+                        // +: one or more quotes, chars, as defined by the preceding char-class (optional)
+                        // g: the global flag. This tells JS to apply the regex to the entire string. If you omit this, you'll only replace a single char.
+                        receivedValue = receivedValue.replace(/['"]+/g, '');
 
-                    if ($rootScope.mqttFieldToUpdate.hasOwnProperty($rootScope.s4gVar.mqttTopicFronius)) {
+                        if ($rootScope.mqttFieldToUpdate.hasOwnProperty($rootScope.s4gVar.mqttTopicFronius)) {
 
-                        if ($rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius].hasOwnProperty(installationHouse)) {
-                            //if ($rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicGUI][mqttSensorType].hasOwnProperty(key))
-                            //{
-                            $rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius][installationHouse][key] = receivedValue;
-                            //}
-                        } else {
-                            //check if there is one field with multiple installations
-                            for (var singleInstallation in $rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius]) {
-                                if (singleInstallation.includes(installationHouse)) {
-                                    $rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius][installationHouse][key] = receivedValue;
+                            if ($rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius].hasOwnProperty(localInstallationHouse)) {
+                                //if ($rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicGUI][mqttSensorType].hasOwnProperty(key))
+                                //{
+                                $rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius][localInstallationHouse][key] = receivedValue;
+                                //}
+                            } else {
+                                //check if there is one field with multiple installations
+                                for (var singleInstallation in $rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius]) {
+                                    if (singleInstallation.includes(localInstallationHouse)) {
+                                        $rootScope.mqttFieldToUpdate[$rootScope.s4gVar.mqttTopicFronius][localInstallationHouse][key] = receivedValue;
+                                    }
                                 }
                             }
                         }
-                    }
-                    if (key.includes("ESS-status")) {
-                        $rootScope.s4gVar.fronius.CurrentBatteryStatus = receivedValue;
-                    }
-                    if (key.includes("SOC")) {
-                        $rootScope.s4gVar.fronius.CurrentBatteryStateOfCharge = receivedValue;
-                    }
-                    if (key.includes("EV-Load")) {
-                        $rootScope.s4gVar.currentEV = receivedValue;
-                    }
-                    if ($rootScope.s4gVar.demoEnabled) {
-                        //elaborate also ESS-status="EMPTY",SOC=7.0,P-Akku=-2491.8,P-Grid=-93.88,P-Load=153.12,P-PV=2758.1
-                        if (key.includes("P-Akku")) {
-                            $rootScope.s4gVar.currentESS = Number(receivedValue);
-                            $rootScope.s4gVar.currentFroPAkku = Number(receivedValue);
-                            $rootScope.s4gVar.lastNowESS = new Date();
-                            $rootScope.s4gVar.lastTimestampESS = timestamp;
-                        }
-                        if (key.includes("P-Grid")) {
-                            $rootScope.s4gVar.currentFroPGrid = Number(receivedValue);
-                        }
-                        if (key.includes("P-Load")) {
-                            $rootScope.s4gVar.currentSMM = Number(receivedValue);
-                            $rootScope.s4gVar.currentFroPLoad = Number(receivedValue);
-                        }
-                        if (key.includes("P-PV")) {
-                            $rootScope.s4gVar.currentPV = Number(receivedValue);
-                            $rootScope.s4gVar.currentFroPPV = Number(receivedValue);
-                            $rootScope.s4gVar.lastNowPV = new Date();
-                            $rootScope.s4gVar.lastTimestampPV = timestamp;
+                        if (key.includes("ESS-status")) {
+                            $rootScope.s4gVar.fronius.CurrentBatteryStatus = receivedValue;
                         }
                         if (key.includes("SOC")) {
-                            $rootScope.s4gVar.currentFroSOC = Number(receivedValue);
-                        }
-                        if (key.includes("ESS-status")) {
-                            $rootScope.s4gVar.CurrentBatteryStatus = receivedValue;
+                            $rootScope.s4gVar.fronius.CurrentBatteryStateOfCharge = receivedValue;
                         }
                         if (key.includes("EV-Load")) {
                             $rootScope.s4gVar.currentEV = receivedValue;
+                        }
+                        if ($rootScope.s4gVar.demoEnabled) {
+                            //elaborate also ESS-status="EMPTY",SOC=7.0,P-Akku=-2491.8,P-Grid=-93.88,P-Load=153.12,P-PV=2758.1
+                            if (key.includes("P-Akku")) {
+                                $rootScope.s4gVar.currentESS = Number(receivedValue);
+                                $rootScope.s4gVar.currentFroPAkku = Number(receivedValue);
+                                $rootScope.s4gVar.lastNowESS = new Date();
+                                $rootScope.s4gVar.lastTimestampESS = timestamp;
+                            }
+                            if (key.includes("P-Grid")) {
+                                $rootScope.s4gVar.currentFroPGrid = Number(receivedValue);
+                            }
+                            if (key.includes("P-Load")) {
+                                $rootScope.s4gVar.currentSMM = Number(receivedValue);
+                                $rootScope.s4gVar.currentFroPLoad = Number(receivedValue);
+                            }
+                            if (key.includes("P-PV")) {
+                                $rootScope.s4gVar.currentPV = Number(receivedValue);
+                                $rootScope.s4gVar.currentFroPPV = Number(receivedValue);
+                                $rootScope.s4gVar.lastNowPV = new Date();
+                                $rootScope.s4gVar.lastTimestampPV = timestamp;
+                            }
+                            if (key.includes("SOC")) {
+                                $rootScope.s4gVar.currentFroSOC = Number(receivedValue);
+                            }
+                            if (key.includes("ESS-status")) {
+                                $rootScope.s4gVar.CurrentBatteryStatus = receivedValue;
+                            }
+                            if (key.includes("EV-Load")) {
+                                $rootScope.s4gVar.currentEV = receivedValue;
+                            }
                         }
                     }
                 }
