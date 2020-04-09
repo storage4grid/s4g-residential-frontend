@@ -506,7 +506,7 @@ app.run(["$rootScope", "$location", "$interval", "MqttFactory", function($rootSc
             var parts = message.payloadString.split(" ");
             var localInstallationHouse = parts[0];
             //process data only if they are related to the right installation House
-            if ($rootScope.s4gVar.installationHouse==localInstallationHouse) {
+            if (("InstallationHouse"+$rootScope.s4gVar.installationHouse)==localInstallationHouse) {
                 var timestamp = parts[parts.length - 1];
                 var numDataGroups = (parts.length - 1);
 
